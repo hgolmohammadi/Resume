@@ -7,1428 +7,274 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --bg-primary: #F8FAFC;
-            --bg-secondary: #FFFFFF;
-            --bg-elevated: #F1F5F9;
-            --text-primary: #0F172A;
-            --text-secondary: #334155;
-            --text-muted: #64748B;
-            --navy-deep: #0B1528;
-            --navy-accent: #1E293B;
-            --gold-primary: #C5A059;
-            --gold-light: #FBF7F0;
-            --gold-border: #E6D3A7;
-            --teal-accent: #0D9488;
-            --border-color: #E2E8F0;
-            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
-            --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.12);
-            --radius-md: 12px;
-            --radius-lg: 18px;
+            --bg-primary: #F8FAFC; --bg-secondary: #FFFFFF; --bg-elevated: #F1F5F9;
+            --text-primary: #0F172A; --text-secondary: #334155; --text-muted: #64748B;
+            --navy-deep: #0B1528; --gold-primary: #C5A059; --gold-light: #FBF7F0;
+            --gold-border: #E6D3A7; --teal-accent: #0D9488; --border-color: #E2E8F0;
+            --shadow-sm: 0 1px 3px rgba(15,23,42,0.06); --shadow-md: 0 10px 25px -5px rgba(15,23,42,0.08);
+            --radius-md: 12px; --radius-lg: 18px;
         }
-
         [data-theme="dark"] {
-            --bg-primary: #090F1C;
-            --bg-secondary: #111C30;
-            --bg-elevated: #1A2942;
-            --text-primary: #F8FAFC;
-            --text-secondary: #CBD5E1;
-            --text-muted: #94A3B8;
-            --navy-deep: #050911;
-            --navy-accent: #1E293B;
-            --gold-primary: #D4AF37;
-            --gold-light: rgba(212, 175, 55, 0.12);
-            --gold-border: rgba(212, 175, 55, 0.35);
-            --teal-accent: #14B8A6;
-            --border-color: #1E293B;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --bg-primary: #090F1C; --bg-secondary: #111C30; --bg-elevated: #1A2942;
+            --text-primary: #F8FAFC; --text-secondary: #CBD5E1; --text-muted: #94A3B8;
+            --navy-deep: #050911; --gold-primary: #D4AF37; --gold-light: rgba(212,175,55,0.12);
+            --gold-border: rgba(212,175,55,0.35); --teal-accent: #14B8A6; --border-color: #1E293B;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.75;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
+            background-color: var(--bg-primary); color: var(--text-primary);
+            line-height: 1.75; transition: background-color 0.3s, color 0.3s; overflow-x: hidden;
         }
+        .ltr-inline { direction: ltr; display: inline-block; unicode-bidi: embed; }
+        #interactiveRoot { display: block; }
+        #printPagesContainer { display: none; }
 
-        .ltr-inline {
-            direction: ltr;
-            display: inline-block;
-            font-family: 'Vazirmatn', sans-serif;
-            unicode-bidi: embed;
-        }
-
-        #interactiveRoot {
-            display: block;
-        }
-
-        #printPagesContainer {
-            display: none;
-        }
-
-        /* نوار ناوبری هوشمند */
+        /* نوار ناوبری */
         .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(11, 21, 40, 0.94);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.25);
-            padding: 0.75rem 1.5rem;
-            color: #FFFFFF;
+            position: sticky; top: 0; z-index: 1000; background: rgba(11,21,40,0.95);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(197,160,89,0.25);
+            padding: 0.75rem 1.5rem; color: #FFF;
         }
-
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            max-width: 1200px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
         }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #FFFFFF;
-            text-decoration: none;
-        }
-
+        .nav-brand { display: flex; align-items: center; gap: 0.75rem; font-weight: 800; font-size: 1.1rem; color: #FFF; text-decoration: none; }
         .nav-brand-badge {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
+            width: 34px; height: 34px; border-radius: 8px;
             background: linear-gradient(135deg, var(--gold-primary), #9A7B38);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0B1528;
-            font-weight: 900;
-            font-size: 1rem;
+            display: flex; align-items: center; justify-content: center; color: #0B1528; font-weight: 900;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 1.1rem;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            color: #CBD5E1;
-            text-decoration: none;
-            font-size: 0.86rem;
-            font-weight: 500;
-            padding: 0.35rem 0.55rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--gold-primary);
-            background: rgba(197, 160, 89, 0.12);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.55rem;
-            flex-wrap: wrap;
-        }
-
+        .nav-links { display: flex; gap: 1rem; list-style: none; flex-wrap: wrap; }
+        .nav-links a { color: #CBD5E1; text-decoration: none; font-size: 0.86rem; font-weight: 500; padding: 0.35rem 0.55rem; border-radius: 6px; transition: 0.2s; }
+        .nav-links a:hover { color: var(--gold-primary); background: rgba(197,160,89,0.12); }
+        .nav-actions { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
         .btn-icon, .btn-action {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #FFFFFF;
-            padding: 0.45rem 0.85rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            color: #FFF; padding: 0.45rem 0.85rem; border-radius: 8px; cursor: pointer;
+            font-family: inherit; font-size: 0.8rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; transition: 0.2s;
+        }
+        .btn-action.gold { background: linear-gradient(135deg, var(--gold-primary), #A6833E); color: #0B1528; border-color: transparent; font-weight: 700; }
+        .btn-icon:hover, .btn-action:hover { transform: translateY(-1px); border-color: var(--gold-primary); }
+
+        /* مودال QR Code */
+        .qr-modal-backdrop {
+            position: fixed; inset: 0; background: rgba(6,11,22,0.78); backdrop-filter: blur(6px);
+            z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1.5rem;
+        }
+        .qr-modal-backdrop.open { display: flex; }
+        .qr-modal {
+            background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--gold-primary);
+            border-radius: var(--radius-lg); max-width: 460px; width: 100%; padding: 1.75rem; text-align: center;
+        }
+        .qr-preview-box {
+            background: #FFF; padding: 1rem; border-radius: 12px; border: 2px solid var(--gold-primary);
+            display: inline-flex; flex-direction: column; align-items: center; gap: 0.5rem; margin: 1rem 0;
+        }
+        .qr-preview-box img { width: 180px; height: 180px; display: block; }
+        .qr-url-input {
+            width: 100%; padding: 0.6rem 0.85rem; border-radius: 8px; border: 1px solid var(--border-color);
+            background: var(--bg-elevated); color: var(--text-primary); font-family: inherit; font-size: 0.85rem; direction: ltr; text-align: left; margin-top: 0.4rem;
         }
 
-        .btn-action.gold {
-            background: linear-gradient(135deg, var(--gold-primary), #A6833E);
-            color: #0B1528;
-            border-color: transparent;
-            font-weight: 700;
-        }
-
-        .btn-icon:hover, .btn-action:hover {
-            transform: translateY(-1px);
-            border-color: var(--gold-primary);
-        }
-
-        /* ==========================================================================
-           پنجره مودال کارت ویزیت مدیریتی دوطرفه (Executive Business Card)
-           ========================================================================== */
-        .bcard-modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(6, 11, 22, 0.84);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-
-        .bcard-modal-backdrop.open {
-            display: flex;
-        }
-
-        .bcard-modal {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--gold-primary);
-            border-radius: var(--radius-lg);
-            max-width: 980px;
-            width: 100%;
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            text-align: center;
-            margin: auto;
-        }
-
-        .bcard-modal-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 0.35rem;
-            color: var(--text-primary);
-        }
-
-        .bcard-modal-subtitle {
-            font-size: 0.86rem;
-            color: var(--text-muted);
-            margin-bottom: 1.75rem;
-        }
-
-        .bcard-showcase {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.75rem;
-        }
-
-        .bcard-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.65rem;
-        }
-
-        .bcard-side-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--gold-primary);
-        }
-
-        /* ابعاد استاندارد کارت ویزیت ۹ در ۵ سانتی‌متر با نسبت دقیق ۹ به ۵ */
-        .exec-bcard {
-            width: 432px;
-            height: 245px;
-            border-radius: 14px;
-            background: radial-gradient(circle at 85% 15%, #1E293B 0%, #0B1528 70%, #060B16 100%);
-            color: #FFFFFF;
-            border: 1.5px solid rgba(197, 160, 89, 0.55);
-            box-shadow: 0 18px 35px -8px rgba(0, 0, 0, 0.45);
-            position: relative;
-            overflow: hidden;
-            padding: 1.35rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: right;
-            direction: rtl;
-        }
-
-        /* نوار طلایی پایین کارت ویزیت */
-        .exec-bcard::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #C5A059, #E6C687, #9A7B38);
-        }
-
-        .bcard-front-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .bcard-identity {
-            flex: 1;
-        }
-
-        .bcard-name {
-            font-size: 1.35rem;
-            font-weight: 900;
-            color: #FFFFFF;
-            line-height: 1.25;
-            margin-bottom: 0.2rem;
-        }
-
-        .bcard-role-main {
-            font-size: 0.74rem;
-            font-weight: 700;
-            color: #C5A059;
-            margin-bottom: 0.55rem;
-        }
-
-        .bcard-positions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-            font-size: 0.72rem;
-            color: #E2E8F0;
-            border-right: 2px solid #C5A059;
-            padding-right: 0.5rem;
-        }
-
-        .bcard-qr-frame {
-            background: #FFFFFF;
-            padding: 0.35rem;
-            border-radius: 8px;
-            border: 1.5px solid #C5A059;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.15rem;
-            flex-shrink: 0;
-        }
-
-        .bcard-qr-frame img {
-            width: 68px;
-            height: 68px;
-            display: block;
-        }
-
-        .bcard-qr-frame span {
-            font-size: 0.52rem;
-            font-weight: 800;
-            color: #0B1528;
-        }
-
-        .bcard-front-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-            padding-top: 0.55rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.25rem 0.75rem;
-            font-size: 0.68rem;
-            color: #CBD5E1;
-        }
-
-        .bcard-contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.3rem;
-        }
-
-        .bcard-contact-label {
-            color: #94A3B8;
-        }
-
-        /* طرح پشت کارت ویزیت */
-        .exec-bcard.back-side {
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 0.6rem;
-        }
-
-        .bcard-back-badge {
-            width: 38px;
-            height: 38px;
-            border-radius: 9px;
-            background: linear-gradient(135deg, #C5A059, #9A7B38);
-            color: #0B1528;
-            font-weight: 900;
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .bcard-back-qr {
-            background: #FFFFFF;
-            padding: 0.45rem;
-            border-radius: 10px;
-            border: 2px solid #C5A059;
-        }
-
-        .bcard-back-qr img {
-            width: 86px;
-            height: 86px;
-            display: block;
-        }
-
-        .bcard-back-url {
-            font-size: 0.72rem;
-            color: #E6C687;
-            letter-spacing: 0.4px;
-            direction: ltr;
-        }
-
-        @media (max-width: 500px) {
-            .exec-bcard {
-                width: 100%;
-                max-width: 350px;
-                height: auto;
-                min-height: 215px;
-            }
-        }
-
-        /* بخش اول: Executive Hero */
+        /* بخش اول: Hero */
         .hero {
             background: radial-gradient(circle at 85% 20%, #1E293B 0%, #0B1528 65%, #060B16 100%);
-            color: #FFFFFF;
-            padding: 4.5rem 1.5rem 4rem;
-            border-bottom: 3px solid var(--gold-primary);
-            position: relative;
+            color: #FFF; padding: 4rem 1.5rem; border-bottom: 3px solid var(--gold-primary);
         }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.25rem;
-        }
-
-        @media (min-width: 992px) {
-            .hero-container {
-                grid-template-columns: 1.5fr 1.2fr;
-                align-items: center;
-            }
-        }
-
+        .hero-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 2.2rem; }
+        @media (min-width: 992px) { .hero-container { grid-template-columns: 1.48fr 1.22fr; align-items: center; } }
         .executive-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(197, 160, 89, 0.15);
-            border: 1px solid rgba(197, 160, 89, 0.4);
-            color: #E6C687;
-            padding: 0.35rem 0.9rem;
-            border-radius: 999px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
+            display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(197,160,89,0.15);
+            border: 1px solid rgba(197,160,89,0.4); color: #E6C687; padding: 0.35rem 0.9rem;
+            border-radius: 999px; font-size: 0.82rem; font-weight: 600; margin-bottom: 1.1rem;
         }
-
-        .hero-name {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
-            color: #FFFFFF;
-        }
-
-        .hero-title {
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            color: var(--gold-primary);
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-        }
-
-        .hero-subtitle {
-            color: #CBD5E1;
-            font-size: 1rem;
-            max-width: 780px;
-            margin-bottom: 1.75rem;
-            text-align: justify;
-        }
-
-        .hero-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-badge {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            color: #E2E8F0;
-            padding: 0.35rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-        }
-
+        .hero-name { font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 900; margin-bottom: 0.45rem; color: #FFF; }
+        .hero-title { font-size: clamp(1.08rem, 2vw, 1.32rem); color: var(--gold-primary); font-weight: 700; margin-bottom: 1.2rem; }
+        .hero-subtitle { color: #CBD5E1; font-size: 0.98rem; margin-bottom: 1.6rem; text-align: justify; }
+        .hero-badges { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+        .hero-badge { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: #E2E8F0; padding: 0.32rem 0.75rem; border-radius: 6px; font-size: 0.8rem; }
         .hero-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: var(--radius-lg);
-            padding: 1.65rem 1.8rem;
-            backdrop-filter: blur(8px);
-            width: 100%;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(197,160,89,0.35);
+            border-radius: var(--radius-lg); padding: 1.6rem 1.75rem; backdrop-filter: blur(8px); width: 100%;
         }
-
-        .hero-card-title {
-            font-size: 0.95rem;
-            color: var(--gold-primary);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .hero-card-top-grid {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .hero-stat-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.85rem;
-            flex: 1;
-        }
-
-        .hero-stat-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
-        }
-
-        .hero-stat-label {
-            font-size: 0.82rem;
-            color: #94A3B8;
-        }
-
-        .hero-stat-value {
-            font-size: 0.98rem;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-
+        .hero-card-title { font-size: 0.95rem; color: var(--gold-primary); font-weight: 700; margin-bottom: 0.9rem; padding-bottom: 0.55rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+        .hero-card-top-grid { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+        .hero-stat-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
+        .hero-stat-item { display: flex; flex-direction: column; gap: 0.15rem; }
+        .hero-stat-label { font-size: 0.82rem; color: #94A3B8; }
+        .hero-stat-value { font-size: 0.98rem; font-weight: 700; color: #FFF; }
         .hero-qr-widget {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
-            background: #FFFFFF;
-            padding: 0.5rem;
-            border-radius: 10px;
-            border: 2px solid var(--gold-primary);
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
+            display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+            background: #FFF; padding: 0.45rem; border-radius: 10px; border: 2px solid var(--gold-primary);
+            cursor: pointer; flex-shrink: 0; transition: transform 0.2s;
         }
-
-        .hero-qr-widget:hover {
-            transform: scale(1.03);
-        }
-
-        .hero-qr-widget img {
-            width: 74px;
-            height: 74px;
-            display: block;
-        }
-
-        .hero-qr-caption {
-            font-size: 0.64rem;
-            font-weight: 800;
-            color: #0B1528;
-            text-align: center;
-            line-height: 1.2;
-        }
-
+        .hero-qr-widget:hover { transform: scale(1.03); }
+        .hero-qr-widget img { width: 72px; height: 72px; display: block; }
+        .hero-qr-caption { font-size: 0.62rem; font-weight: 800; color: #0B1528; text-align: center; }
         .hero-contact-bar {
-            margin-top: 1.15rem;
-            padding-top: 0.95rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-            font-size: 0.86rem;
+            margin-top: 1.1rem; padding-top: 0.9rem; border-top: 1px solid rgba(255,255,255,0.12);
+            display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.86rem;
         }
+        .hero-contact-bar a, .hero-contact-row { color: #E2E8F0; text-decoration: none; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; white-space: nowrap; }
+        .hero-contact-bar a:hover { color: var(--gold-primary); }
 
-        .hero-contact-bar a,
-        .hero-contact-row {
-            color: #E2E8F0;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-            transition: color 0.2s;
-            white-space: nowrap;
-        }
+        /* بخش‌های اصلی */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; display: flex; flex-direction: column; gap: 3.2rem; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.6rem; padding-bottom: 0.7rem; border-bottom: 2px solid var(--border-color); position: relative; }
+        .section-header::after { content: ''; position: absolute; bottom: -2px; right: 0; width: 90px; height: 2px; background: var(--gold-primary); }
+        .section-title { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); }
+        .section-title-en { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
-        .hero-contact-bar a:hover {
-            color: var(--gold-primary);
-        }
-
-        /* ساختار کانتینر اصلی */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 3.5rem;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.75rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--border-color);
-            position: relative;
-        }
-
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            right: 0;
-            width: 90px;
-            height: 2px;
-            background-color: var(--gold-primary);
-        }
-
-        .section-title {
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
-        }
-
-        .section-title-en {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* کارت پروفایل حرفه‌ای */
         .profile-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-right: 4px solid var(--gold-primary);
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            text-align: justify;
-            color: var(--text-secondary);
+            background: var(--bg-secondary); border: 1px solid var(--border-color); border-right: 4px solid var(--gold-primary);
+            border-radius: var(--radius-md); padding: 1.85rem; box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; gap: 0.95rem; text-align: justify; color: var(--text-secondary);
         }
 
-        /* شبکه حوزه‌های توانمندی — چیدمان دقیق ۳ در ۳ در دسکتاپ */
-        .competencies-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
-        }
-
-        @media (min-width: 640px) {
-            .competencies-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 992px) {
-            .competencies-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
+        /* شبکه ۳ در ۳ حوزه‌های توانمندی */
+        .competencies-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+        @media (min-width: 640px) { .competencies-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 992px) { .competencies-grid { grid-template-columns: repeat(3, 1fr); } }
         .comp-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.4rem;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+            background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md);
+            padding: 1.35rem; box-shadow: var(--shadow-sm); transition: 0.2s;
         }
+        .comp-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--gold-primary); }
+        .comp-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.65rem; }
+        .comp-title { font-weight: 800; font-size: 0.98rem; color: var(--text-primary); }
+        .comp-tag { font-size: 0.68rem; font-weight: 700; color: var(--gold-primary); background: var(--gold-light); border: 1px solid var(--gold-border); padding: 0.12rem 0.5rem; border-radius: 4px; white-space: nowrap; }
+        .comp-desc { font-size: 0.86rem; color: var(--text-secondary); text-align: justify; }
 
-        .comp-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--gold-primary);
-        }
+        /* تایم‌لاین سوابق شغلی */
+        .timeline-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+        .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-btn { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.42rem 0.95rem; border-radius: 8px; font-family: inherit; font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .filter-btn.active, .filter-btn:hover { background: var(--navy-deep); color: var(--gold-primary); border-color: var(--gold-primary); }
+        .timeline { position: relative; padding-right: 1.9rem; border-right: 2px solid var(--gold-border); display: flex; flex-direction: column; gap: 1.35rem; }
+        .timeline-item { position: relative; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; }
+        .timeline-item::before { content: ''; position: absolute; right: -2.32rem; top: 1.5rem; width: 13px; height: 13px; border-radius: 50%; background: var(--gold-primary); border: 3px solid var(--bg-primary); z-index: 2; }
+        .timeline-item.current-role { border-right: 4px solid var(--gold-primary); }
+        .timeline-header { padding: 1.25rem 1.45rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; user-select: none; }
+        .timeline-header:hover { background: var(--bg-elevated); }
+        .role-main { display: flex; flex-direction: column; gap: 0.25rem; }
+        .role-title { font-size: 1.08rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+        .badge-current { background: rgba(13,148,136,0.15); color: var(--teal-accent); border: 1px solid rgba(13,148,136,0.35); font-size: 0.7rem; padding: 0.1rem 0.55rem; border-radius: 99px; font-weight: 700; }
+        .role-org { font-size: 0.92rem; font-weight: 700; color: var(--gold-primary); }
+        .role-meta { display: flex; align-items: center; gap: 0.85rem; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; }
+        .toggle-indicator { font-size: 0.78rem; color: var(--text-muted); background: var(--bg-elevated); padding: 0.3rem 0.7rem; border-radius: 6px; white-space: nowrap; }
+        .timeline-body { padding: 1rem 1.45rem 1.4rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.91rem; }
+        .timeline-item.collapsed .timeline-body { display: none; }
+        .timeline-list { padding-right: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.55rem; }
+        .timeline-list li::marker { color: var(--gold-primary); }
+        .sub-category-title { font-weight: 700; color: var(--text-primary); margin-top: 0.95rem; margin-bottom: 0.3rem; font-size: 0.92rem; }
 
-        .comp-card-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 0.5rem;
-            margin-bottom: 0.7rem;
-        }
+        /* دستاوردها، تحصیلات، تألیفات و مهارت‌ها */
+        .cards-grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.2rem; }
+        .achievement-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.45rem; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 0.55rem; position: relative; overflow: hidden; }
+        .achievement-card::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: var(--gold-primary); }
+        .achievement-org { font-size: 0.76rem; font-weight: 700; color: var(--teal-accent); }
+        .achievement-title { font-size: 1.02rem; font-weight: 800; color: var(--text-primary); }
+        .achievement-desc { font-size: 0.87rem; color: var(--text-secondary); text-align: justify; }
 
-        .comp-title {
-            font-weight: 800;
-            font-size: 1rem;
-            color: var(--text-primary);
-        }
+        .edu-cert-grid { display: grid; grid-template-columns: 1fr; gap: 1.4rem; }
+        @media (min-width: 860px) { .edu-cert-grid { grid-template-columns: 1fr 1fr; } }
+        .box-panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+        .box-panel-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-primary); padding-bottom: 0.55rem; border-bottom: 1px solid var(--border-color); }
+        .clean-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+        .clean-list-item { display: flex; flex-direction: column; gap: 0.18rem; padding-bottom: 0.75rem; border-bottom: 1px dashed var(--border-color); }
+        .clean-list-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .item-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.7rem; }
+        .item-year-badge { background: var(--gold-light); color: var(--gold-primary); border: 1px solid var(--gold-border); font-size: 0.72rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 5px; white-space: nowrap; }
+        .item-primary { font-weight: 800; font-size: 0.93rem; color: var(--text-primary); }
+        .item-secondary { font-size: 0.83rem; color: var(--gold-primary); font-weight: 600; }
+        .item-muted { font-size: 0.78rem; color: var(--text-muted); }
 
-        .comp-tag {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--gold-primary);
-            background: var(--gold-light);
-            border: 1px solid var(--gold-border);
-            padding: 0.15rem 0.55rem;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
+        .skills-groups-wrapper { display: flex; flex-direction: column; gap: 1.3rem; }
+        .skill-tag-cloud { display: flex; flex-wrap: wrap; gap: 0.48rem; margin-top: 0.45rem; }
+        .skill-pill { background: var(--bg-elevated); color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.32rem 0.7rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
 
-        .comp-desc {
-            font-size: 0.87rem;
-            color: var(--text-secondary);
-            text-align: justify;
-        }
+        .footer { background: var(--navy-deep); color: #CBD5E1; padding: 2.8rem 1.5rem; border-top: 2px solid var(--gold-primary); margin-top: 2rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
 
-        /* بخش تایم‌لاین تعاملی سوابق شغلی */
-        .timeline-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.75rem;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.45rem 1rem;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--navy-deep);
-            color: var(--gold-primary);
-            border-color: var(--gold-primary);
-        }
-
-        .timeline {
-            position: relative;
-            padding-right: 2rem;
-            border-right: 2px solid var(--gold-border);
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .timeline-item {
-            position: relative;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            transition: all 0.25s ease;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            right: -2.42rem;
-            top: 1.6rem;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--gold-primary);
-            border: 3px solid var(--bg-primary);
-            z-index: 2;
-        }
-
-        .timeline-item.current-role {
-            border-right: 4px solid var(--gold-primary);
-        }
-
-        .timeline-header {
-            padding: 1.35rem 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-            user-select: none;
-        }
-
-        .timeline-header:hover {
-            background: var(--bg-elevated);
-        }
-
-        .role-main {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-
-        .role-title {
-            font-size: 1.12rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-        }
-
-        .badge-current {
-            background: rgba(13, 148, 136, 0.15);
-            color: var(--teal-accent);
-            border: 1px solid rgba(13, 148, 136, 0.35);
-            font-size: 0.72rem;
-            padding: 0.1rem 0.55rem;
-            border-radius: 99px;
-            font-weight: 700;
-        }
-
-        .role-org {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--gold-primary);
-        }
-
-        .role-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            flex-wrap: wrap;
-            margin-top: 0.2rem;
-        }
-
-        .toggle-indicator {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            background: var(--bg-elevated);
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-
-        .timeline-body {
-            padding: 0 1.5rem 1.5rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 1.1rem;
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-        }
-
-        .timeline-item.collapsed .timeline-body {
-            display: none;
-        }
-
-        .timeline-list {
-            padding-right: 1.2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-            margin-top: 0.6rem;
-        }
-
-        .timeline-list li::marker {
-            color: var(--gold-primary);
-        }
-
-        .sub-category-title {
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-top: 1rem;
-            margin-bottom: 0.35rem;
-            font-size: 0.93rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        /* دستاوردهای شاخص و پروژه‌های راهبردی */
-        .cards-grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .achievement-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .achievement-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--gold-primary);
-        }
-
-        .achievement-org {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--teal-accent);
-        }
-
-        .achievement-title {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-
-        .achievement-desc {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            text-align: justify;
-        }
-
-        /* تحصیلات، گواهینامه‌ها و تالیفات */
-        .edu-cert-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 860px) {
-            .edu-cert-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .box-panel {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.6rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .box-panel-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 1.1rem;
-            color: var(--text-primary);
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .clean-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.95rem;
-        }
-
-        .clean-list-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px dashed var(--border-color);
-        }
-
-        .clean-list-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .item-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .item-year-badge {
-            background: var(--gold-light);
-            color: var(--gold-primary);
-            border: 1px solid var(--gold-border);
-            font-size: 0.74rem;
-            font-weight: 700;
-            padding: 0.1rem 0.5rem;
-            border-radius: 5px;
-            white-space: nowrap;
-        }
-
-        .item-primary {
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-        }
-
-        .item-secondary {
-            font-size: 0.84rem;
-            color: var(--gold-primary);
-            font-weight: 600;
-        }
-
-        .item-muted {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* مهارت‌ها و زبان‌ها */
-        .skills-groups-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 1.4rem;
-        }
-
-        .skill-tag-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .skill-pill {
-            background: var(--bg-elevated);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
-        /* فوتر وب */
-        .footer {
-            background: var(--navy-deep);
-            color: #CBD5E1;
-            padding: 3rem 1.5rem;
-            border-top: 2px solid var(--gold-primary);
-            margin-top: 2rem;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        /* ==========================================================================
-           استایل اختصاصی موتور صفحه‌بندی هوشمند چاپ (A4 Print Sheet Layout)
-           ========================================================================== */
-        @page {
-            size: A4 portrait;
-            margin: 0mm !important;
-        }
-
+        /* استایل‌های اختصاصی موتور صفحه‌بندی هوشمند A4 و چاپ */
+        @page { size: A4 portrait; margin: 0mm !important; }
         .print-a4-sheet {
-            width: 210mm;
-            height: 296.5mm;
-            padding: 11mm 14mm 10mm 14mm;
-            background: #FFFFFF !important;
-            color: #000000 !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            page-break-after: always;
-            break-after: page;
-            overflow: hidden;
-            box-sizing: border-box;
+            width: 210mm; height: 296.5mm; padding: 11mm 14mm 10mm 14mm;
+            background: #FFF !important; color: #000 !important;
+            display: flex; flex-direction: column; justify-content: space-between;
+            page-break-after: always; break-after: page; overflow: hidden; box-sizing: border-box;
         }
-
-        .print-a4-sheet:last-child {
-            page-break-after: auto;
-            break-after: auto;
-        }
-
-        .print-sheet-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-        }
-
+        .print-a4-sheet:last-child { page-break-after: auto; break-after: auto; }
+        .print-sheet-content { flex: 1; display: flex; flex-direction: column; gap: 0.55rem; }
         .print-sheet-footer {
-            margin-top: auto;
-            padding-top: 0.45rem;
-            border-top: 1px solid #CBD5E1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 8.2pt;
-            color: #475569;
+            margin-top: auto; padding-top: 0.45rem; border-top: 1px solid #CBD5E1;
+            display: flex; justify-content: space-between; align-items: center; font-size: 8.2pt; color: #475569;
         }
+        .print-footer-right { font-weight: 600; color: #0F172A; }
+        .print-footer-left { font-weight: 800; color: #0F172A; background: #F8FAFC; border: 1px solid #CBD5E1; padding: 0.1rem 0.55rem; border-radius: 4px; }
 
-        .print-footer-right {
-            font-weight: 600;
-            color: #0F172A;
-        }
+        body.preparing-print, body.printing-active { background: #FFF !important; color: #000 !important; font-size: 9pt !important; line-height: 1.44 !important; }
+        body.preparing-print .navbar, body.preparing-print .timeline-controls, body.preparing-print .toggle-indicator, body.preparing-print .footer, body.preparing-print .qr-modal-backdrop,
+        body.printing-active .toggle-indicator, body.printing-active #interactiveRoot, body.printing-active .navbar, body.printing-active .qr-modal-backdrop { display: none !important; }
+        body.printing-active #printPagesContainer { display: block !important; width: 210mm; margin: 0 auto; }
 
-        .print-footer-left {
-            font-weight: 800;
-            color: #0F172A;
-            background: #F8FAFC;
-            border: 1px solid #CBD5E1;
-            padding: 0.1rem 0.55rem;
-            border-radius: 4px;
-        }
+        body.preparing-print .hero, body.printing-active .hero { background: #FFF !important; color: #000 !important; padding: 0 0 0.85rem 0 !important; margin-bottom: 0.4rem !important; border-bottom: 2px solid #0B1528 !important; }
+        body.preparing-print .hero-container, body.printing-active .hero-container { grid-template-columns: 1.38fr 1.22fr !important; gap: 1.1rem !important; align-items: stretch !important; }
+        body.preparing-print .hero-name, body.printing-active .hero-name { color: #0B1528 !important; font-size: 18.5pt !important; margin-bottom: 0.15rem !important; }
+        body.preparing-print .hero-title, body.printing-active .hero-title { color: #9A7B38 !important; font-size: 10.5pt !important; margin-bottom: 0.45rem !important; }
+        body.preparing-print .hero-subtitle, body.printing-active .hero-subtitle { color: #1E293B !important; font-size: 8.6pt !important; margin-bottom: 0.65rem !important; }
+        body.preparing-print .executive-tag, body.preparing-print .hero-badge, body.printing-active .executive-tag, body.printing-active .hero-badge { background: #F8FAFC !important; color: #0F172A !important; border: 1px solid #CBD5E1 !important; font-size: 7.2pt !important; padding: 0.12rem 0.45rem !important; }
+        body.preparing-print .hero-card, body.printing-active .hero-card { background: #F8FAFC !important; border: 1px solid #CBD5E1 !important; padding: 0.8rem 0.95rem !important; }
+        body.preparing-print .hero-card-title, body.printing-active .hero-card-title { color: #0F172A !important; border-bottom: 1px solid #CBD5E1 !important; margin-bottom: 0.45rem !important; padding-bottom: 0.3rem !important; font-size: 8.8pt !important; }
+        body.preparing-print .hero-stat-label, body.printing-active .hero-stat-label { color: #475569 !important; font-size: 7.8pt !important; }
+        body.preparing-print .hero-stat-value, body.preparing-print .hero-contact-bar a, body.preparing-print .hero-contact-row,
+        body.printing-active .hero-stat-value, body.printing-active .hero-contact-bar a, body.printing-active .hero-contact-row { color: #0F172A !important; font-size: 8.4pt !important; }
+        body.preparing-print .hero-contact-bar, body.printing-active .hero-contact-bar { border-top: 1px solid #CBD5E1 !important; margin-top: 0.55rem !important; padding-top: 0.45rem !important; gap: 0.25rem !important; font-size: 7.9pt !important; }
 
-        body.preparing-print,
-        body.printing-active {
-            background: #FFFFFF !important;
-            color: #000000 !important;
-            font-size: 9pt !important;
-            line-height: 1.44 !important;
-        }
+        body.preparing-print .section-header, body.printing-active .section-header { margin-top: 0.35rem !important; margin-bottom: 0.5rem !important; padding-bottom: 0.28rem !important; border-bottom: 1.5px solid #0F172A !important; }
+        body.preparing-print .section-title, body.printing-active .section-title { font-size: 11.5pt !important; color: #0F172A !important; }
+        body.preparing-print .profile-card, body.printing-active .profile-card { padding: 0.85rem 1.05rem !important; border: 1px solid #CBD5E1 !important; border-right: 3px solid #C5A059 !important; background: #FFF !important; box-shadow: none !important; gap: 0.45rem !important; font-size: 8.7pt !important; }
+        body.preparing-print .competencies-grid, body.printing-active .competencies-grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 0.48rem !important; }
+        body.preparing-print .comp-card, body.printing-active .comp-card { padding: 0.6rem 0.7rem !important; border: 1px solid #CBD5E1 !important; background: #FFF !important; box-shadow: none !important; }
+        body.preparing-print .comp-title, body.printing-active .comp-title { font-size: 8.6pt !important; }
+        body.preparing-print .comp-desc, body.printing-active .comp-desc { font-size: 7.8pt !important; }
 
-        body.preparing-print .navbar,
-        body.preparing-print .timeline-controls,
-        body.preparing-print .toggle-indicator,
-        body.preparing-print .footer,
-        body.preparing-print .bcard-modal-backdrop,
-        body.printing-active .toggle-indicator,
-        body.printing-active #interactiveRoot,
-        body.printing-active .navbar,
-        body.printing-active .bcard-modal-backdrop {
-            display: none !important;
-        }
+        body.preparing-print .timeline, body.printing-active .timeline { padding-right: 0 !important; border-right: none !important; gap: 0.5rem !important; }
+        body.preparing-print .timeline-item, body.printing-active .timeline-item { border: 1px solid #CBD5E1 !important; background: #FFF !important; box-shadow: none !important; margin-bottom: 0 !important; }
+        body.preparing-print .timeline-item.current-role, body.printing-active .timeline-item.current-role { border-right: 3px solid #C5A059 !important; }
+        body.preparing-print .timeline-item::before, body.printing-active .timeline-item::before { display: none !important; }
+        body.preparing-print .timeline-header, body.printing-active .timeline-header { padding: 0.55rem 0.85rem !important; background: #F8FAFC !important; }
+        body.preparing-print .role-title, body.printing-active .role-title { font-size: 9.4pt !important; }
+        body.preparing-print .role-org, body.printing-active .role-org { font-size: 8.4pt !important; }
+        body.preparing-print .timeline-body, body.printing-active .timeline-body { display: block !important; padding: 0.5rem 0.85rem 0.7rem !important; font-size: 8.3pt !important; }
+        body.preparing-print .timeline-list, body.printing-active .timeline-list { gap: 0.25rem !important; margin-top: 0.3rem !important; }
 
-        body.printing-active #printPagesContainer {
-            display: block !important;
-            width: 210mm;
-            margin: 0 auto;
-        }
+        body.preparing-print .cards-grid-2, body.preparing-print #education .edu-cert-grid,
+        body.printing-active .cards-grid-2, body.printing-active #education .edu-cert-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem !important; }
+        body.preparing-print .achievement-card, body.preparing-print .box-panel,
+        body.printing-active .achievement-card, body.printing-active .box-panel { padding: 0.7rem 0.9rem !important; border: 1px solid #CBD5E1 !important; background: #FFF !important; box-shadow: none !important; }
 
-        body.preparing-print .hero,
-        body.printing-active .hero {
-            background: #FFFFFF !important;
-            color: #000000 !important;
-            padding: 0 0 0.85rem 0 !important;
-            margin-bottom: 0.4rem !important;
-            border-bottom: 2px solid #0B1528 !important;
-        }
-
-        body.preparing-print .hero-container,
-        body.printing-active .hero-container {
-            grid-template-columns: 1.4fr 1.2fr !important;
-            gap: 1.1rem !important;
-            align-items: stretch !important;
-        }
-
-        body.preparing-print .hero-name,
-        body.printing-active .hero-name {
-            color: #0B1528 !important;
-            font-size: 18.5pt !important;
-            margin-bottom: 0.15rem !important;
-        }
-
-        body.preparing-print .hero-title,
-        body.printing-active .hero-title {
-            color: #9A7B38 !important;
-            font-size: 10.5pt !important;
-            margin-bottom: 0.45rem !important;
-        }
-
-        body.preparing-print .hero-subtitle,
-        body.printing-active .hero-subtitle {
-            color: #1E293B !important;
-            font-size: 8.7pt !important;
-            margin-bottom: 0.65rem !important;
-        }
-
-        body.preparing-print .executive-tag,
-        body.preparing-print .hero-badge,
-        body.printing-active .executive-tag,
-        body.printing-active .hero-badge {
-            background: #F8FAFC !important;
-            color: #0F172A !important;
-            border: 1px solid #CBD5E1 !important;
-            font-size: 7.2pt !important;
-            padding: 0.12rem 0.45rem !important;
-        }
-
-        body.preparing-print .hero-card,
-        body.printing-active .hero-card {
-            background: #F8FAFC !important;
-            border: 1px solid #CBD5E1 !important;
-            padding: 0.8rem 0.95rem !important;
-        }
-
-        body.preparing-print .hero-card-title,
-        body.printing-active .hero-card-title {
-            color: #0F172A !important;
-            border-bottom: 1px solid #CBD5E1 !important;
-            margin-bottom: 0.5rem !important;
-            padding-bottom: 0.35rem !important;
-            font-size: 8.8pt !important;
-        }
-
-        body.preparing-print .hero-stat-label,
-        body.printing-active .hero-stat-label {
-            color: #475569 !important;
-            font-size: 7.8pt !important;
-        }
-
-        body.preparing-print .hero-stat-value,
-        body.preparing-print .hero-contact-bar a,
-        body.preparing-print .hero-contact-row,
-        body.printing-active .hero-stat-value,
-        body.printing-active .hero-contact-bar a,
-        body.printing-active .hero-contact-row {
-            color: #0F172A !important;
-            font-size: 8.5pt !important;
-        }
-
-        body.preparing-print .hero-contact-bar,
-        body.printing-active .hero-contact-bar {
-            border-top: 1px solid #CBD5E1 !important;
-            margin-top: 0.6rem !important;
-            padding-top: 0.45rem !important;
-            gap: 0.28rem !important;
-            font-size: 7.9pt !important;
-        }
-
-        body.preparing-print .section-header,
-        body.printing-active .section-header {
-            margin-top: 0.35rem !important;
-            margin-bottom: 0.55rem !important;
-            padding-bottom: 0.3rem !important;
-            border-bottom: 1.5px solid #0F172A !important;
-        }
-
-        body.preparing-print .section-title,
-        body.printing-active .section-title {
-            font-size: 11.8pt !important;
-            color: #0F172A !important;
-        }
-
-        body.preparing-print .profile-card,
-        body.printing-active .profile-card {
-            padding: 0.9rem 1.1rem !important;
-            border: 1px solid #CBD5E1 !important;
-            border-right: 3px solid #C5A059 !important;
-            background: #FFFFFF !important;
-            box-shadow: none !important;
-            gap: 0.5rem !important;
-            font-size: 8.8pt !important;
-        }
-
-        body.preparing-print .competencies-grid,
-        body.printing-active .competencies-grid {
-            display: grid !important;
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 0.5rem !important;
-        }
-
-        body.preparing-print .comp-card,
-        body.printing-active .comp-card {
-            padding: 0.65rem 0.75rem !important;
-            border: 1px solid #CBD5E1 !important;
-            background: #FFFFFF !important;
-            box-shadow: none !important;
-        }
-
-        body.preparing-print .comp-title,
-        body.printing-active .comp-title {
-            font-size: 8.8pt !important;
-        }
-
-        body.preparing-print .comp-desc,
-        body.printing-active .comp-desc {
-            font-size: 7.9pt !important;
-        }
-
-        body.preparing-print .timeline,
-        body.printing-active .timeline {
-            padding-right: 0 !important;
-            border-right: none !important;
-            gap: 0.55rem !important;
-        }
-
-        body.preparing-print .timeline-item,
-        body.printing-active .timeline-item {
-            border: 1px solid #CBD5E1 !important;
-            background: #FFFFFF !important;
-            box-shadow: none !important;
-            margin-bottom: 0 !important;
-        }
-
-        body.preparing-print .timeline-item.current-role,
-        body.printing-active .timeline-item.current-role {
-            border-right: 3px solid #C5A059 !important;
-        }
-
-        body.preparing-print .timeline-item::before,
-        body.printing-active .timeline-item::before {
-            display: none !important;
-        }
-
-        body.preparing-print .timeline-header,
-        body.printing-active .timeline-header {
-            padding: 0.6rem 0.9rem !important;
-            background: #F8FAFC !important;
-        }
-
-        body.preparing-print .role-title,
-        body.printing-active .role-title {
-            font-size: 9.6pt !important;
-        }
-
-        body.preparing-print .role-org,
-        body.printing-active .role-org {
-            font-size: 8.5pt !important;
-        }
-
-        body.preparing-print .timeline-body,
-        body.printing-active .timeline-body {
-            display: block !important;
-            padding: 0.55rem 0.9rem 0.75rem !important;
-            font-size: 8.4pt !important;
-        }
-
-        body.preparing-print .timeline-list,
-        body.printing-active .timeline-list {
-            gap: 0.28rem !important;
-            margin-top: 0.35rem !important;
-        }
-
-        body.preparing-print .cards-grid-2,
-        body.preparing-print #education .edu-cert-grid,
-        body.printing-active .cards-grid-2,
-        body.printing-active #education .edu-cert-grid {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 0.55rem !important;
-        }
-
-        body.preparing-print .achievement-card,
-        body.preparing-print .box-panel,
-        body.printing-active .achievement-card,
-        body.printing-active .box-panel {
-            padding: 0.75rem 0.95rem !important;
-            border: 1px solid #CBD5E1 !important;
-            background: #FFFFFF !important;
-            box-shadow: none !important;
-        }
-
-        body.preparing-print #publications .edu-cert-grid,
-        body.printing-active #publications .edu-cert-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 0.65rem !important;
-        }
-
-        body.preparing-print .publications-list,
-        body.printing-active .publications-list {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 0.45rem 1.1rem !important;
-        }
-
-        body.preparing-print .clean-list-item,
-        body.printing-active .clean-list-item {
-            padding-bottom: 0.4rem !important;
-        }
-
-        body.preparing-print .skills-groups-wrapper,
-        body.printing-active .skills-groups-wrapper {
-            display: grid !important;
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 0.85rem !important;
-        }
-
-        body.preparing-print .skill-pill,
-        body.printing-active .skill-pill {
-            padding: 0.18rem 0.45rem !important;
-            font-size: 7.5pt !important;
-            background: #F8FAFC !important;
-            border: 1px solid #CBD5E1 !important;
-        }
+        body.preparing-print #publications .edu-cert-grid, body.printing-active #publications .edu-cert-grid { display: flex !important; flex-direction: column !important; gap: 0.6rem !important; }
+        body.preparing-print .publications-list, body.printing-active .publications-list { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 0.42rem 1rem !important; }
+        body.preparing-print .clean-list-item, body.printing-active .clean-list-item { padding-bottom: 0.35rem !important; }
+        body.preparing-print .skills-groups-wrapper, body.printing-active .skills-groups-wrapper { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 0.8rem !important; }
+        body.preparing-print .skill-pill, body.printing-active .skill-pill { padding: 0.16rem 0.42rem !important; font-size: 7.4pt !important; background: #F8FAFC !important; border: 1px solid #CBD5E1 !important; }
 
         @media print {
-            html, body {
-                background: #FFFFFF !important;
-                color: #000000 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            #interactiveRoot, .navbar, .toggle-indicator, .bcard-modal-backdrop {
-                display: none !important;
-            }
-            #printPagesContainer {
-                display: block !important;
-                width: 210mm !important;
-            }
+            html, body { background: #FFF !important; color: #000 !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #interactiveRoot, .navbar, .toggle-indicator, .qr-modal-backdrop { display: none !important; }
+            #printPagesContainer { display: block !important; width: 210mm !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- نوار ناوبری ثابت و هوشمند (بدون دکمه تنظیم QR Code و با دکمه کارت ویزیت مدیریتی) -->
+    <!-- نوار ناوبری ثابت -->
     <nav class="navbar" aria-label="ناوبری اصلی رزومه">
         <div class="nav-container">
             <a href="#top" class="nav-brand">
@@ -1444,91 +290,32 @@
                 <li><a href="#publications">تألیفات و مهارت‌ها</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="btn-icon" onclick="openBusinessCardModal()" type="button" title="مشاهده و دانلود کارت ویزیت مدیریتی">
-                    <span>کارت ویزیت مدیریتی</span>
-                </button>
-                <button class="btn-icon" id="themeToggle" type="button" title="تغییر حالت نمایش روشن/تاریک">
-                    <span id="themeLabel">حالت تاریک</span>
-                </button>
-                <button class="btn-action gold" onclick="triggerExecutivePrint()" type="button">
-                    چاپ / دریافت PDF استاندارد
-                </button>
+                <button class="btn-icon" onclick="openQrModal()" type="button">تنظیم و دانلود QR Code</button>
+                <button class="btn-icon" id="themeToggle" type="button"><span id="themeLabel">حالت تاریک</span></button>
+                <button class="btn-action gold" onclick="triggerExecutivePrint()" type="button">چاپ / دریافت PDF استاندارد</button>
             </div>
         </div>
     </nav>
 
-    <!-- پنجره نمایش و دانلود کارت ویزیت مدیریتی دوطرفه (رو و پشت) -->
-    <div class="bcard-modal-backdrop" id="bcardModalBackdrop" onclick="if(event.target === this) closeBusinessCardModal()">
-        <div class="bcard-modal" role="dialog" aria-labelledby="bcardModalTitle">
-            <h3 class="bcard-modal-title" id="bcardModalTitle">کارت ویزیت مدیریتی (Executive Business Card)</h3>
-            <p class="bcard-modal-subtitle">
-                طراحی اختصاصی دوطرفه (رو و پشت) در ابعاد استاندارد ۹ × ۵ سانتی‌متر به همراه QR Code متصل به رزومه آنلاین شما
+    <!-- مودال مدیریت و دانلود QR Code -->
+    <div class="qr-modal-backdrop" id="qrModalBackdrop" onclick="if(event.target === this) closeQrModal()">
+        <div class="qr-modal" role="dialog" aria-labelledby="qrModalTitle">
+            <h3 style="font-size:1.12rem; font-weight:800; margin-bottom:0.4rem;" id="qrModalTitle">QR Code اختصاصی رزومه دیجیتال</h3>
+            <p style="font-size:0.82rem; color:var(--text-muted);">
+                این QR Code به‌صورت پیش‌فرض به آدرس رزومه آنلاین شما در گیت‌هاب (<span class="ltr-inline">hgolmohammadi.github.io/Resume/</span>) متصل است.
             </p>
-
-            <div class="bcard-showcase">
-                <!-- طرح روی کارت ویزیت -->
-                <div class="bcard-wrapper">
-                    <span class="bcard-side-label">طرح روی کارت (Front Side)</span>
-                    <div class="exec-bcard">
-                        <div class="bcard-front-top">
-                            <div class="bcard-identity">
-                                <div class="bcard-name">حمید گل‌محمدی</div>
-                                <div class="bcard-role-main">مدیر ارشد تحول دیجیتال، بانکداری هوشمند و راهبری IT</div>
-                                <div class="bcard-positions">
-                                    <div><strong>رئیس هیئت‌مدیره</strong> — شرکت نوین‌تک</div>
-                                    <div><strong>مدیر تحول دیجیتال و بانکداری هوشمند</strong> — بانک اقتصاد نوین</div>
-                                </div>
-                            </div>
-                            <div class="bcard-qr-frame">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=2&color=0B1528&bgcolor=FFFFFF&data=https%3A%2F%2Fhgolmohammadi.github.io%2FResume%2F" alt="QR Code">
-                                <span>اسکن رزومه دیجیتال</span>
-                            </div>
-                        </div>
-                        <div class="bcard-front-bottom">
-                            <div class="bcard-contact-item">
-                                <span class="bcard-contact-label">تلفن:</span>
-                                <span class="ltr-inline" style="font-weight:700; color:#FFF;">09125730084</span>
-                            </div>
-                            <div class="bcard-contact-item">
-                                <span class="bcard-contact-label">مکان:</span>
-                                <span>تهران، ایران</span>
-                            </div>
-                            <div class="bcard-contact-item">
-                                <span class="bcard-contact-label">ایمیل:</span>
-                                <span class="ltr-inline">golmohammady@yahoo.com</span>
-                            </div>
-                            <div class="bcard-contact-item">
-                                <span class="bcard-contact-label">لینکدین:</span>
-                                <span class="ltr-inline">in/hamid-golmohammadi</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- طرح پشت کارت ویزیت -->
-                <div class="bcard-wrapper">
-                    <span class="bcard-side-label">طرح پشت کارت (Back Side)</span>
-                    <div class="exec-bcard back-side">
-                        <div class="bcard-back-badge">ح‌گ</div>
-                        <div style="font-weight:800; font-size:0.92rem; color:#FFF;">HAMID GOLMOHAMMADI</div>
-                        <div class="bcard-back-qr">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=2&color=0B1528&bgcolor=FFFFFF&data=https%3A%2F%2Fhgolmohammadi.github.io%2FResume%2F" alt="QR Code">
-                        </div>
-                        <div class="bcard-back-url">hgolmohammadi.github.io/Resume</div>
-                    </div>
-                </div>
+            <div class="qr-preview-box">
+                <img id="modalQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=4&color=0B1528&bgcolor=FFFFFF&data=https%3A%2F%2Fhgolmohammadi.github.io%2FResume%2F" alt="QR Code">
+                <span style="font-size:0.74rem; font-weight:700; color:#0B1528;">حمید گل‌محمدی | Executive Portfolio</span>
             </div>
-
-            <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
-                <button class="btn-action gold" type="button" onclick="downloadBusinessCardPng('front')">
-                    دانلود تصویر روی کارت (PNG با کیفیت چاپ)
-                </button>
-                <button class="btn-action" style="background:#0F172A; color:#FFF;" type="button" onclick="downloadBusinessCardPng('back')">
-                    دانلود تصویر پشت کارت (PNG با کیفیت چاپ)
-                </button>
-                <button class="btn-icon" style="color:var(--text-primary); border-color:var(--border-color);" type="button" onclick="closeBusinessCardModal()">
-                    بستن پنجره
-                </button>
+            <div style="text-align:right; margin-bottom:1.1rem;">
+                <label for="qrUrlInput" style="font-size:0.8rem; font-weight:700;">لینک مقصد QR Code:</label>
+                <input type="url" id="qrUrlInput" class="qr-url-input" value="https://hgolmohammadi.github.io/Resume/">
+            </div>
+            <div style="display:flex; gap:0.55rem; justify-content:center; flex-wrap:wrap;">
+                <button class="btn-action gold" type="button" onclick="updateQrCodeUrl()">به‌روزرسانی QR Code</button>
+                <a id="downloadQrLink" href="https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=10&color=0B1528&bgcolor=FFFFFF&data=https%3A%2F%2Fhgolmohammadi.github.io%2FResume%2F" target="_blank" rel="noopener" class="btn-action" style="background:#0F172A; color:#FFF; text-decoration:none;">باز کردن و ذخیره تصویر</a>
+                <button class="btn-icon" style="color:var(--text-primary); border-color:var(--border-color);" type="button" onclick="closeQrModal()">بستن</button>
             </div>
         </div>
     </div>
@@ -1573,8 +360,7 @@
                                 <span class="hero-stat-value">بانک اقتصاد نوین (EN Bank)</span>
                             </li>
                         </ul>
-                        <!-- ویجت QR Code متصل به کارت ویزیت و رزومه آنلاین -->
-                        <div class="hero-qr-widget" onclick="openBusinessCardModal()" title="مشاهده کارت ویزیت مدیریتی">
+                        <div class="hero-qr-widget" onclick="openQrModal()" title="برای بزرگ‌نمایی یا تغییر لینک کلیک کنید">
                             <img id="heroQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=2&color=0B1528&bgcolor=FFFFFF&data=https%3A%2F%2Fhgolmohammadi.github.io%2FResume%2F" alt="QR Code رزومه دیجیتال">
                             <span class="hero-qr-caption">اسکن رزومه دیجیتال</span>
                         </div>
@@ -1626,7 +412,6 @@
                     <span class="section-title-en">Core Areas of Expertise</span>
                 </div>
                 <div class="competencies-grid">
-                    <!-- ردیف اول -->
                     <div class="comp-card">
                         <div class="comp-card-header">
                             <span class="comp-title">تحول دیجیتال و بانکداری هوشمند</span>
@@ -1646,4 +431,791 @@
                             <span class="comp-title">راهبری دفتر مدیریت پروژه سازمانی</span>
                             <span class="comp-tag">Enterprise PMO</span>
                         </div>
-                        <p class="comp-desc">طراحی چرخه حیات مدیریت پروژه، مدل
+                        <p class="comp-desc">طراحی چرخه حیات مدیریت پروژه، مدل‌سازی داده جامع و پیاده‌سازی داشبوردهای مدیریتی پایش پروژه، قرارداد، بودجه و صورتحساب‌های فناوری اطلاعات.</p>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-card-header">
+                            <span class="comp-title">برنامه‌ریزی استراتژیک، بودجه و فرآیند</span>
+                            <span class="comp-tag">Strategy & Planning</span>
+                        </div>
+                        <p class="comp-desc">تدوین برنامه‌های راهبردی و عملیاتی مبتنی بر BSC، OKR و SWOT، بودجه‌ریزی سالانه شرکت اصلی و شرکت‌های تابعه، و مهندسی مجدد فرآیندها و ساختار سازمانی.</p>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-card-header">
+                            <span class="comp-title">حاکمیت داده و هوش مصنوعی در بانکداری</span>
+                            <span class="comp-tag">Data & AI Strategy</span>
+                        </div>
+                        <p class="comp-desc">هدایت حاکمیت داده سازمانی، تحلیل‌های بلادرنگ، اعتبارسنجی مشتریان با یادگیری ماشین (Credit Scoring)، نظارت هوشمند (RegTech) و کشف تقلب.</p>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-card-header">
+                            <span class="comp-title">سامانه‌ها و دستیارهای هوشمند مدیریتی</span>
+                            <span class="comp-tag">AI Assistants & Atlas</span>
+                        </div>
+                        <p class="comp-desc">طراحی و پیاده‌سازی دستیار هوشمند مدیریتی ویژه مدیران ارشد، دستیار هوشمند دستورالعمل‌ها و بخشنامه‌های بانکی و سامانه اطلس هوشمند بانکی.</p>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-card-header">
+                            <span class="comp-title">تأمین مالی زنجیره تأمین و محصولات نوین ثروت</span>
+                            <span class="comp-tag">SCF & WealthTech</span>
+                        </div>
+                        <p class="comp-desc">ارائه طرح و مشارکت در پیاده‌سازی سامانه تأمین مالی زنجیره تأمین (SCF)، سامانه آنلاین فروش طلا (کارات ۲۴)، طرح سپرده امانی و تسویه آنی مطالبات کارگزاری تأمین سرمایه.</p>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-card-header">
+                            <span class="comp-title">نظام‌های پرداخت، کارتی و اکوسیستم</span>
+                            <span class="comp-tag">Payments & FinTech</span>
+                        </div>
+                        <p class="comp-desc">نوسازی سامانه‌های کارتی، مهاجرت به EMV، محصولات BNPL، پایلوت ریال دیجیتال، کاربردهای بلاکچین و توسعه بانکداری شرکتی و SME مبتنی بر API.</p>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-card-header">
+                            <span class="comp-title">تفکر طراحی، چابک‌سازی و اتوماسیون</span>
+                            <span class="comp-tag">Design & Automation</span>
+                        </div>
+                        <p class="comp-desc">به‌کارگیری تفکر طراحی (Design Thinking)، تیم‌سازی چابک (Agile)، اتوماسیون فرآیندهای هوشمند با N8N و نمونه‌سازی سریع محصولات دیجیتال (Vibe Coding).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ۴. مسیر حرفه‌ای (Career Timeline) -->
+            <section id="experience">
+                <div class="section-header">
+                    <h2 class="section-title">مسیر حرفه‌ای و سوابق مدیریتی</h2>
+                    <span class="section-title-en">Executive Career Timeline</span>
+                </div>
+
+                <div class="timeline-controls">
+                    <div class="filter-group" role="group" aria-label="فیلتر سوابق شغلی">
+                        <button class="filter-btn active" data-filter="all">همه سوابق (۱۲ سمت)</button>
+                        <button class="filter-btn" data-filter="banking">بانکداری، فین‌تک و بیمه</button>
+                        <button class="filter-btn" data-filter="gov">حاکمیتی و تجارت الکترونیکی</button>
+                    </div>
+                    <button class="filter-btn" id="toggleAllBtn" type="button">بستن / باز کردن همه جزئیات</button>
+                </div>
+
+                <div class="timeline" id="careerTimeline">
+
+                    <!-- ۱. نوین‌تک -->
+                    <article class="timeline-item current-role" data-category="banking">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">
+                                    رئیس هیئت‌مدیره (Chairman of the Board)
+                                    <span class="badge-current">هم‌اکنون</span>
+                                </h3>
+                                <div class="role-org">شرکت نوین‌تک (Novin Tech)</div>
+                                <div class="role-meta">
+                                    <span>اسفند ۱۴۰۳ – تاکنون (<span class="ltr-inline">March 2025 – Present</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <p>راهبری کلان راهبردی و استقرار اصول حاکمیت شرکتی در سطح هیئت‌مدیره:</p>
+                            <ul class="timeline-list">
+                                <li>همراهی و هدایت هیئت‌مدیره در ترسیم چشم‌انداز استراتژیک بلندمدت شرکت و تضمین پیاده‌سازی بهترین تجارب حاکمیت شرکتی (Corporate Governance).</li>
+                                <li><strong>ریاست کمیته سرمایه‌گذاری (Investment Committee):</strong> شناسایی، ارزیابی تخصصی و تصویب سرمایه‌گذاری‌های راهبردی و پرونده‌های ادغام و تملیک (M&A) در بخش‌های فناورانه با رشد بالا شامل فین‌تک (FinTech)، سلامت دیجیتال (HealthTech) و فناوری گردشگری (TravelTech).</li>
+                                <li>ایفای نقش مشاور راهبردی و منتور برای مدیرعامل و تیم اجرایی در ابتکارات کلیدی و برنامه‌های توسعه‌ای شرکت.</li>
+                                <li>ترویج فرهنگ نوآوری سازمانی با هدف تحقق رشد پایدار و ارتقای ارزش بلندمدت سهامداران.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- ۲. بانک اقتصاد نوین -->
+                    <article class="timeline-item current-role" data-category="banking">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">
+                                    مدیر تحول دیجیتال و بانکداری هوشمند (Digital Transformation & Smart Banking Manager)
+                                    <span class="badge-current">هم‌اکنون</span>
+                                </h3>
+                                <div class="role-org">بانک اقتصاد نوین (EghtesadNovin Bank)</div>
+                                <div class="role-meta">
+                                    <span>بهمن ۱۴۰۳ – تاکنون (<span class="ltr-inline">February 2025 – Present</span>)</span>
+                                    <span>•</span>
+                                    <span>ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <p>هدایت چرخش راهبردی بانک به‌سوی خدمات مالی آینده‌نگر، مشتری‌محور و مبتنی بر فناوری از طریق طراحی، پیاده‌سازی و مقیاس‌دهی ابتکارات در کانال‌های بانکداری خرد، شرکتی و دیجیتال با تضمین تاب‌آوری عملیاتی و انطباق رگولاتوری:</p>
+                            <div class="sub-category-title">الف) طرح‌ها و دستاوردهای کلیدی پیاده‌سازی‌شده:</div>
+                            <ul class="timeline-list">
+                                <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>سامانه آنلاین فروش طلا (کارات ۲۴)</strong>.</li>
+                                <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>سامانه دستیار هوشمند مدیریتی</strong> ویژه مدیران ارشد.</li>
+                                <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>سامانه دستیار هوشمند دستورالعمل‌ها و بخشنامه‌های بانک</strong>.</li>
+                                <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>سامانه اطلس هوشمند بانکی</strong>.</li>
+                                <li>ارائه طرح و پیاده‌سازی <strong>داشبورد مدیریتی پایش و پیگیری پروژه‌ها، قراردادها، بودجه و صورتحساب‌های معاونت فناوری اطلاعات</strong>.</li>
+                                <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>سامانه تأمین مالی زنجیره تأمین (SCF)</strong>.</li>
+                                <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>طرح سپرده امانی</strong>.</li>
+                                <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>طرح تسویه آنی مطالبات کارگزاری تأمین سرمایه</strong>.</li>
+                            </ul>
+                            <div class="sub-category-title">ب) محورهای راهبری و مسئولیت‌های کلان:</div>
+                            <ul class="timeline-list">
+                                <li><strong>پلتفرم‌های بانکداری دیجیتال:</strong> نظارت عالی بر توسعه و بهینه‌سازی راهبردهای موبایل‌بانک، اینترنت‌بانک و سوپراپ، با یکپارچه‌سازی مدل‌های بانکداری مبتنی بر پلتفرم (BaaP) و مالیه تعبیه‌شده (Embedded Finance).</li>
+                                <li><strong>ابتکارات بانکداری هوشمند و راهبرد داده:</strong> پیاده‌سازی راهکارهای هوش مصنوعی (AI)، حاکمیت داده سازمانی، تحلیل‌های بلادرنگ، اعتبارسنجی هوشمند (Credit Scoring)، کشف تقلب و شخصی‌سازی خدمات.</li>
+                                <li><strong>نظام‌های پرداخت، کارت و محصولات نوین:</strong> راهبری نوسازی سامانه‌های کارتی، مهاجرت به استاندارد EMV، توسعه محصولات اعتباری BNPL، حساب‌های سپرده طلا، پایلوت‌های ریال دیجیتال و کاربردهای بلاکچین.</li>
+                                <li><strong>بانکداری شرکتی، SME و توسعه اکوسیستم:</strong> پشتیبانی از پذیرش دیجیتال مشتریان (Digital Onboarding)، خدمات مبتنی بر API و ایجاد مشارکت‌های راهبردی با فین‌تک‌ها و پلتفرم‌های تجارت الکترونیکی.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- ۳. شرکت داده‌ورزی سداد - مدیر ePMO -->
+                    <article class="timeline-item" data-category="banking">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">مدیر دفتر مدیریت پروژه‌های سازمانی (Manager of Enterprise PMO - ePMO)</h3>
+                                <div class="role-org">شرکت داده‌ورزی سداد (Sadad Informatic Corporation) — سابقه کل در سداد: ۱۰ سال و ۱ ماه</div>
+                                <div class="role-meta">
+                                    <span>خرداد ۱۳۹۷ – بهمن ۱۴۰۳ (<span class="ltr-inline">June 2018 – February 2025 | 6 yrs 9 mos</span>)</span>
+                                    <span>•</span>
+                                    <span>ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="timeline-list">
+                                <li>طراحی و تدوین <strong>مدل داده جامع (Master Data Model)</strong> برای کلیه پروژه‌های شرکت داده‌ورزی سداد.</li>
+                                <li>طراحی و استقرار فرآیندهای چرخه حیات مدیریت پروژه (Project Management Life Cycle) در قالب سامانه یکپارچه مدیریت پروژه سازمانی.</li>
+                                <li>آموزش، فرهنگ‌سازی و پشتیبانی تخصصی از تیم‌ها و کارکنان در طول دوره استقرار سیستم مدیریت پروژه.</li>
+                                <li>طراحی و پیاده‌سازی گزارش‌های کلان پروژه‌ها، شاخص‌های سنجش عملکرد و <strong>داشبوردهای مدیریتی ویژه مدیرعامل (CEO Dashboards)</strong> بر بستر ابزارهای <span class="ltr-inline">Jira (eazyBI)</span> و <span class="ltr-inline">Confluence</span>.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- ۴. شرکت ایده‌های هوشمند کسب‌وکار سیمرغ -->
+                    <article class="timeline-item" data-category="banking">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">عضو هیئت‌مدیره (Member of the Management Board)</h3>
+                                <div class="role-org">شرکت ایده‌های هوشمند کسب‌وکار سیمرغ (SIMORGH Smart Intelligent Business Ideas)</div>
+                                <div class="role-meta">
+                                    <span>مرداد ۱۳۹۶ – دی ۱۳۹۷ (<span class="ltr-inline">August 2017 – January 2019 | 1 yr 6 mos</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <p>مشارکت در راهبری کلان یکی از بزرگ‌ترین و تخصصی‌ترین شرکت‌های فناوری اطلاعات فعال در صنعت بیمه کشور (تأسیس ۱۳۸۱/۲۰۰۲) با چشم‌انداز رهبری فناوری اطلاعات در صنعت بیمه و ارائه راهکارهای جامع، نوآورانه و مدرن به شرکت‌های بزرگ بیمه کشور.</p>
+                        </div>
+                    </article>
+
+                    <!-- ۵. شرکت داده‌ورزی سداد - معاون طرح و برنامه -->
+                    <article class="timeline-item" data-category="banking">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">معاون طرح و برنامه (Deputy Director of Planning Department)</h3>
+                                <div class="role-org">شرکت داده‌ورزی سداد (Sadad Informatic Corporation)</div>
+                                <div class="role-meta">
+                                    <span>بهمن ۱۳۹۳ – تیر ۱۳۹۷ (<span class="ltr-inline">February 2015 – July 2018 | 3 yrs 6 mos</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <div class="sub-category-title">۱. مدیریت بهبود سازمانی و فرآیندها:</div>
+                            <ul class="timeline-list">
+                                <li>طراحی و مستندسازی فرآیندهای سازمانی در حوزه‌های کارکردی و مدیریت واحدهای پشتیبان شامل امور اداری، هماهنگی بودجه، نقشه‌برداری فرآیندی، آموزش و اتوماسیون.</li>
+                                <li>بازنگری و اصلاح آیین‌نامه‌ها و مستندات شرکت به‌منظور ارتقای کارایی و اثربخشی فعالیت‌ها.</li>
+                            </ul>
+                            <div class="sub-category-title">۲. برنامه‌ریزی راهبردی و بودجه‌ریزی:</div>
+                            <ul class="timeline-list">
+                                <li>تدوین برنامه استراتژیک و عملیاتی شرکت و انجام پایش‌های مقطعی بر اساس سیاست‌های مدیریت ارشد.</li>
+                                <li>تدوین بودجه سالانه شرکت به همراه نظارت بر فرآیند بودجه‌ریزی شرکت هلدینگ و شرکت‌های تابعه.</li>
+                                <li>ارزیابی عملکرد سازمانی و ارائه طرح‌های بهبود از طریق اصلاح ساختار سازمانی.</li>
+                            </ul>
+                            <div class="sub-category-title">۳. مدیریت و کنترل متمرکز پروژه‌ها:</div>
+                            <ul class="timeline-list">
+                                <li>برنامه‌ریزی و کنترل متمرکز پروژه‌ها شامل زمان‌بندی، کنترل پیشرفت زمانی و وزنی فعالیت‌ها و تهیه داشبوردهای مدیریتی به‌عنوان ابزار پشتیبان تصمیم (DSS) برای مدیریت ارشد.</li>
+                            </ul>
+                            <div class="sub-category-title">۴. تحقیق و توسعه (R&D) و سیستم‌های اطلاعاتی سازمانی:</div>
+                            <ul class="timeline-list">
+                                <li>تحلیل بازار و رقبا در صنعت بانکداری، ارائه طرح‌های ایجاد محصولات و راهکارهای نوین بانکی و مدیریت تولید محتوای تخصصی برای ارتقای دانش کارکنان.</li>
+                                <li>شناسایی وضعیت سیستم‌های اطلاعاتی موجود، تدوین برنامه بهبود و یکپارچه‌سازی، و راهبری استقرار و فرهنگ‌سازی پذیرش سیستم‌های جدید (مانند سامانه مدیریت اسناد DMS و مکاتبات سازمانی).</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- ۶. فناوری اطلاعات راهبر سداد - معاون ستادی -->
+                    <article class="timeline-item" data-category="banking">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">معاون ستادی (Deputy Chief of Staff)</h3>
+                                <div class="role-org">شرکت فناوری اطلاعات راهبر سداد (Information Technology of Rahbar-e-SADAD)</div>
+                                <div class="role-meta">
+                                    <span>تیر ۱۳۹۳ – بهمن ۱۳۹۳ (<span class="ltr-inline">July 2014 – February 2015 | 8 mos</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <p>هماهنگی و راهبری امور ستادی، اجرایی و مدیریتی در مجموعه فناوری اطلاعات راهبر سداد.</p>
+                        </div>
+                    </article>
+
+                    <!-- ۷. وزارت صمت - مدیر آموزش و توسعه ای‌نماد -->
+                    <article class="timeline-item" data-category="gov">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">مدیر آموزش و توسعه نماد اعتماد الکترونیکی (Training & Development Manager of eNamad)</h3>
+                                <div class="role-org">وزارت صنعت، معدن و تجارت (Ministry of Industry, Mine and Trade of Iran)</div>
+                                <div class="role-meta">
+                                    <span>مهر ۱۳۹۲ – خرداد ۱۳۹۳ (<span class="ltr-inline">October 2013 – June 2014 | 9 mos</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="timeline-list">
+                                <li>راهبری برنامه‌های آموزش، ترویج و توسعه ملی سامانه نماد اعتماد الکترونیکی (<span class="ltr-inline">eNamad.ir</span>).</li>
+                                <li>برنامه‌ریزی و اجرای «نخستین جشنواره ملی خرید اینترنتی در ای‌نماد» (جشنواره شهروند الکترونیکی در هفته خرید اینترنتی).</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- ۸ و ۹. مرکز توسعه تجارت الکترونیکی -->
+                    <article class="timeline-item" data-category="gov">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">کارشناس ارشد مدیریت پروژه و تحلیلگر کسب‌وکار (ای‌نماد و پنجره واحد تجاری)</h3>
+                                <div class="role-org">مرکز توسعه تجارت الکترونیکی (Iran Center for eCommerce Development - ICeCD)</div>
+                                <div class="role-meta">
+                                    <span>خرداد ۱۳۸۸ – شهریور ۱۳۹۲ (<span class="ltr-inline">June 2009 – September 2013 | 4 yrs 4 mos</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">بستن جزئیات ▴</span>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="timeline-list">
+                                <li><strong>کارشناس مدیریت پروژه و تحلیلگر کسب‌وکار پروژه نماد اعتماد الکترونیکی (<span class="ltr-inline">eNamad.ir</span>):</strong> بهمن ۱۳۹۰ تا شهریور ۱۳۹۲ (<span class="ltr-inline">Feb 2012 – Sep 2013 | 1 yr 8 mos</span>).</li>
+                                <li><strong>کارشناس مدیریت پروژه پنجره واحد تجاری (Single Window):</strong> خرداد ۱۳۸۸ تا خرداد ۱۳۹۱ (<span class="ltr-inline">Jun 2009 – Jun 2012 | 3 yrs 1 mo</span>).</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- ۱۰. سازمان امور مالیاتی کشور -->
+                    <article class="timeline-item collapsed" data-category="gov">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">تحلیلگر کسب‌وکار و مترجم تخصصی — پروژه طرح جامع مالیاتی (Business Analyst and Translator)</h3>
+                                <div class="role-org">سازمان امور مالیاتی کشور (Iran National Tax Administration - INTA)</div>
+                                <div class="role-meta">
+                                    <span>سال ۱۳۹۰ (<span class="ltr-inline">2011 | Less than a year</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">نمایش جزئیات ▾</span>
+                        </div>
+                        <div class="timeline-body">
+                            <p>مشارکت در پروژه ملی طرح جامع مالیاتی در جایگاه تحلیلگر فرآیندهای کسب‌وکار و مترجم تخصصی مستندات فنی و سازمانی در سازمان امور مالیاتی کشور.</p>
+                        </div>
+                    </article>
+
+                    <!-- ۱۱، ۱۲ و ۱۳. سوابق پایه -->
+                    <article class="timeline-item collapsed" data-category="gov">
+                        <div class="timeline-header" onclick="toggleRole(this)">
+                            <div class="role-main">
+                                <h3 class="role-title">کارشناس ارشد تسهیل تجاری، متخصص فناوری اطلاعات و پژوهشگر</h3>
+                                <div class="role-org">مرکز توسعه تجارت الکترونیکی / وزارت بازرگانی / وزارت تعاون، کار و رفاه اجتماعی</div>
+                                <div class="role-meta">
+                                    <span>اردیبهشت ۱۳۷۸ – مهر ۱۳۸۶ (<span class="ltr-inline">May 1999 – October 2007</span>)</span>
+                                    <span>•</span>
+                                    <span>تهران، ایران</span>
+                                </div>
+                            </div>
+                            <span class="toggle-indicator">نمایش جزئیات ▾</span>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="timeline-list">
+                                <li><strong>کارشناس ارشد تسهیل تجاری (Senior Expert in Trade Facilitation) — مرکز توسعه تجارت الکترونیکی (ICeCD):</strong> اسفند ۱۳۸۳ تا مهر ۱۳۸۶ (<span class="ltr-inline">March 2005 – October 2007 | 2 yrs 8 mos</span>).</li>
+                                <li><strong>کارشناس فناوری اطلاعات (IT Specialist) — معاونت برنامه‌ریزی و پژوهش وزارت بازرگانی:</strong> شهریور ۱۳۸۳ تا اسفند ۱۳۸۳ (<span class="ltr-inline">September 2004 – March 2005 | 7 mos</span>).</li>
+                                <li><strong>کارشناس فناوری اطلاعات، پژوهشگر و مشاور (IT Specialist, Researcher & Consultant) — وزارت تعاون، کار و رفاه اجتماعی:</strong> اردیبهشت ۱۳۷۸ تا شهریور ۱۳۸۳ (<span class="ltr-inline">May 1999 – September 2004 | 5 yrs 5 mos</span>).</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ۵ و ۶. دستاوردهای شاخص و برنامه‌های راهبردی -->
+            <section id="achievements">
+                <div class="section-header">
+                    <h2 class="section-title">دستاوردهای شاخص و برنامه‌های راهبردی</h2>
+                    <span class="section-title-en">Key Achievements & Strategic Programs</span>
+                </div>
+                <div class="cards-grid-2">
+                    <div class="achievement-card">
+                        <span class="achievement-org">بانک اقتصاد نوین</span>
+                        <h3 class="achievement-title">طراحی و استقرار سامانه‌های هوشمند، اطلس بانکی و داشبوردهای راهبری IT</h3>
+                        <p class="achievement-desc">ارائه طرح و مشارکت در پیاده‌سازی «سامانه دستیار هوشمند مدیریتی ویژه مدیران ارشد»، «سامانه دستیار هوشمند دستورالعمل‌ها و بخشنامه‌های بانک»، «سامانه اطلس هوشمند بانکی» و پیاده‌سازی «داشبورد مدیریتی پایش پروژه‌ها، قراردادها، بودجه و صورتحساب‌های معاونت فناوری اطلاعات».</p>
+                    </div>
+                    <div class="achievement-card">
+                        <span class="achievement-org">بانک اقتصاد نوین</span>
+                        <h3 class="achievement-title">نوآوری در محصولات مالی، کارات ۲۴ و تأمین مالی زنجیره تأمین (SCF)</h3>
+                        <p class="achievement-desc">ارائه طرح و مشارکت در پیاده‌سازی «سامانه آنلاین فروش طلا (کارات ۲۴)»، «طرح سپرده امانی»، «طرح تسویه آنی مطالبات کارگزاری تأمین سرمایه» و «سامانه تأمین مالی زنجیره تأمین (SCF)» در کنار راهبری پلتفرم‌های بانکداری دیجیتال.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <span class="achievement-org">شرکت نوین‌تک</span>
+                        <h3 class="achievement-title">راهبری کمیته سرمایه‌گذاری و توسعه پورتفولیوی فناورانه</h3>
+                        <p class="achievement-desc">ریاست کمیته سرمایه‌گذاری هیئت‌مدیره جهت ارزیابی و تصویب سرمایه‌گذاری‌های راهبردی و تملیک (M&A) در حوزه‌های پرتقاضای FinTech، HealthTech و TravelTech.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <span class="achievement-org">شرکت داده‌ورزی سداد</span>
+                        <h3 class="achievement-title">معماری مدل داده جامع و داشبوردهای مدیریتی ePMO</h3>
+                        <p class="achievement-desc">طراحی Master Data Model پروژه‌های سداد، استقرار کامل چرخه حیات مدیریت پروژه و ایجاد داشبوردهای تصمیم‌یار مدیرعامل بر بستر Jira (eazyBI) و Confluence.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <span class="achievement-org">شرکت داده‌ورزی سداد</span>
+                        <h3 class="achievement-title">نظام بودجه‌ریزی هلدینگی و یکپارچه‌سازی سیستم‌های اطلاعاتی</h3>
+                        <p class="achievement-desc">تدوین برنامه‌های استراتژیک و بودجه سالانه شرکت و پایش بودجه هلدینگ و شرکت‌های تابعه در جایگاه معاون طرح و برنامه، به همراه استقرار سامانه‌های سازمانی از جمله DMS و مکاتبات.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <span class="achievement-org">سازمان امور مالیاتی، وزارت صمت و مرکز توسعه تجارت الکترونیکی</span>
+                        <h3 class="achievement-title">پروژه‌های ملی نماد اعتماد الکترونیکی (eNamad)، پنجره واحد و طرح جامع مالیاتی</h3>
+                        <p class="achievement-desc">ایفای نقش کلیدی در تحلیل کسب‌وکار، مدیریت پروژه، آموزش و توسعه نماد اعتماد الکترونیکی، برگزاری نخستین جشنواره ملی خرید اینترنتی، پروژه پنجره واحد تجاری و طرح جامع مالیاتی.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ۷. تحصیلات و گواهینامه‌ها -->
+            <section id="education">
+                <div class="section-header">
+                    <h2 class="section-title">تحصیلات دانشگاهی و گواهینامه‌های تخصصی</h2>
+                    <span class="section-title-en">Education & Certifications</span>
+                </div>
+                <div class="edu-cert-grid">
+                    <div class="box-panel">
+                        <h3 class="box-panel-title">تحصیلات آکادمیک</h3>
+                        <ul class="clean-list">
+                            <li class="clean-list-item">
+                                <span class="item-primary">دکتری تخصصی (PhD) فناوری اطلاعات</span>
+                                <span class="item-secondary">دانشگاه علامه طباطبایی (Allameh Tabataba'i University)</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <span class="item-primary">کارشناسی ارشد مدیریت بازاریابی (Master's Degree, Marketing)</span>
+                                <span class="item-secondary">دانشگاه تهران (University of Tehran)</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <span class="item-primary">کارشناسی مدیریت بازرگانی (Bachelor's Degree, Business Administration and Management)</span>
+                                <span class="item-secondary">دانشگاه تهران (University of Tehran)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="box-panel">
+                        <h3 class="box-panel-title">گواهینامه‌های حرفه‌ای بین‌المللی و تخصصی</h3>
+                        <ul class="clean-list">
+                            <li class="clean-list-item">
+                                <span class="item-primary">گواهینامه تحول دیجیتال (Digital Transformation Certificate)</span>
+                                <span class="item-secondary">بانک مرکزی جمهوری اسلامی ایران</span>
+                                <span class="item-muted">راهبری تحول دیجیتال و بانکداری نوین در شبکه بانکی کشور</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <span class="item-primary">گواهینامه حرفه‌ای تحلیل کسب‌وکار (PMI-PBA)</span>
+                                <span class="item-secondary ltr-inline">PMI Professional in Business Analysis (PMI-PBA)</span>
+                                <span class="item-muted">استاندارد بین‌المللی تحلیل کسب‌وکار از مؤسسه مدیریت پروژه (PMI)</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <span class="item-primary">راهکارهای بانکداری متمرکز (Core Banking Solutions)</span>
+                                <span class="item-secondary ltr-inline">Core Banking Solutions</span>
+                                <span class="item-muted">معماری و راهکارهای سامانه‌های جامع بانکی</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <span class="item-primary">مدل‌سازی داده با ابزار GEFEG.FX</span>
+                                <span class="item-secondary ltr-inline">Data Modeling with GEFEG FX</span>
+                                <span class="item-muted">طراحی و استانداردسازی مدل‌های داده و تبادل اطلاعات الکترونیکی</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ۸ و ۹. تألیفات (مرتب‌شده بر اساس سال انتشار) و خوشه‌بندی مهارت‌ها -->
+            <section id="publications">
+                <div class="section-header">
+                    <h2 class="section-title">تألیفات، مهارت‌های تخصصی و زبان‌ها</h2>
+                    <span class="section-title-en">Publications, Skills & Languages</span>
+                </div>
+
+                <div class="edu-cert-grid">
+                    <div class="box-panel" id="publicationsPanel">
+                        <h3 class="box-panel-title">آثار علمی، کتب و مقالات (به ترتیب سال انتشار)</h3>
+                        <ul class="clean-list publications-list">
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">مدل «CAMELS هوشمند»: پارادایمی نوین در نظارت بانکی مبتنی بر هوش مصنوعی و RegTech</span>
+                                    <span class="item-year-badge">۱۴۰۵ | 2026</span>
+                                </div>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">طراحی و پیاده‌سازی مدل اعتبارسنجی مشتریان با استفاده از الگوهای یادگیری ماشین: مطالعه موردی مشتریان بانک ملی ایران</span>
+                                    <span class="item-year-badge">۱۳۹۸ | 2019</span>
+                                </div>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">اختلال دیجیتال: بررسی تأثیر فین‌تک‌ها بر صنعت بانکی</span>
+                                    <span class="item-year-badge">۱۳۹۶ | 2017</span>
+                                </div>
+                                <span class="item-secondary">مجله پیوست (Peyvast Magazine)</span>
+                                <span class="item-muted ltr-inline">Digital Disruption: the impact of Fintech on banking industry</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">تفسیر شکاف دیجیتال از دیدگاه هستی‌شناسی</span>
+                                    <span class="item-year-badge">۱۳۹۴ | 2015</span>
+                                </div>
+                                <span class="item-secondary">کنفرانس مدیریت فناوری اطلاعات (Information Management Conference)</span>
+                                <span class="item-muted ltr-inline">Interpreting Digital Divide from ontological point of view</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">ارائه یک مدل مفهومی برای ارزیابی رابطه بین کیفیت و رضایت در فضای مجازی</span>
+                                    <span class="item-year-badge">۱۳۸۹ | 2010</span>
+                                </div>
+                                <span class="item-secondary">مجله فناوری اطلاعات دانشگاه تهران (Journal of Information Technology)</span>
+                                <span class="item-muted ltr-inline">A conceptual model for assessing relationship between quality and satisfaction in cyberspace</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">نهضت‌های تعاون در جهان</span>
+                                    <span class="item-year-badge">۱۳۸۹ | 2010</span>
+                                </div>
+                                <span class="item-secondary">انتشارات دهخدا</span>
+                                <span class="item-muted ltr-inline">Cooperative Movement in the world</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">تدوین طرح کسب‌وکار (راهنمای ساده و گام‌به‌گام)</span>
+                                    <span class="item-year-badge">۱۳۸۸ | 2009</span>
+                                </div>
+                                <span class="item-secondary">انتشارات ونوس</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">مدیریت منابع انسانی در تعاونی‌ها</span>
+                                    <span class="item-year-badge">۱۳۸۴ | 2005</span>
+                                </div>
+                                <span class="item-secondary">انتشارات پایگان</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">بررسی فاکتورهای مؤثر بر اثربخشی وب به‌عنوان ابزاری در بازاریابی شرکت‌های ایرانی</span>
+                                    <span class="item-year-badge">۱۳۸۲ | 2003</span>
+                                </div>
+                                <span class="item-secondary">مجله دانش مدیریت دانشگاه تهران (Journal of Management)</span>
+                                <span class="item-muted ltr-inline">Determining the factors impacting web effectiveness in marketing department of Iranian companies</span>
+                            </li>
+                            <li class="clean-list-item">
+                                <div class="item-header-row">
+                                    <span class="item-primary">پنجره واحد: تحقق تسهیل تجاری / مدیریت مالی</span>
+                                    <span class="item-year-badge">سایر آثار</span>
+                                </div>
+                                <span class="item-muted ltr-inline">Single Window: realization of trade facilitation | Financial Management</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="box-panel" id="skillsPanel">
+                        <h3 class="box-panel-title">خوشه‌بندی مهارت‌ها و توانمندی‌های زبانی</h3>
+                        <div class="skills-groups-wrapper">
+                            <div class="skill-group-block">
+                                <div class="item-primary" style="margin-bottom:0.4rem;">مدیریت محصول، نوآوری و راهکارهای بانکی:</div>
+                                <div class="skill-tag-cloud">
+                                    <span class="skill-pill">مدیریت محصول (Product Management)</span>
+                                    <span class="skill-pill">راهکارهای بانکی (Banking Solutions)</span>
+                                    <span class="skill-pill">توسعه محصول (Product Development)</span>
+                                    <span class="skill-pill">Core Banking</span>
+                                    <span class="skill-pill">تفکر طراحی (Design Thinking)</span>
+                                    <span class="skill-pill">وایب کدینگ (Vibe Coding)</span>
+                                    <span class="skill-pill">N8N Automation</span>
+                                    <span class="skill-pill">تیم‌سازی چابک (Agile Team Building)</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group-block">
+                                <div class="item-primary" style="margin-bottom:0.4rem;">راهبری، برنامه‌ریزی و ابزارهای مدیریتی:</div>
+                                <div class="skill-tag-cloud">
+                                    <span class="skill-pill">برنامه‌ریزی استراتژیک (BSC, OKR, SWOT)</span>
+                                    <span class="skill-pill">مهندسی مجدد فرآیندها (BPR)</span>
+                                    <span class="skill-pill">مدیریت دفتر پروژه (ePMO)</span>
+                                    <span class="skill-pill">تحلیل کسب‌وکار (PMI-PBA)</span>
+                                    <span class="skill-pill">Jira (eazyBI) & Confluence</span>
+                                    <span class="skill-pill">مدل‌سازی داده (GEFEG FX)</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group-block">
+                                <div class="item-primary" style="margin-bottom:0.4rem;">زبان‌های خارجی:</div>
+                                <div class="skill-tag-cloud">
+                                    <span class="skill-pill">انگلیسی: توانمندی حرفه‌ای کاری (Professional Working)</span>
+                                    <span class="skill-pill">آلمانی: آشنایی کاری محدود (Limited Working)</span>
+                                    <span class="skill-pill">فرانسوی: آشنایی کاری محدود (Limited Working)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ۱۰. فوتر نسخه تعاملی وب -->
+        <footer class="footer">
+            <div class="footer-inner">
+                <div>
+                    <strong style="color:#FFFFFF; font-size:1.05rem;">حمید گل‌محمدی</strong>
+                    <p style="font-size:0.85rem; margin-top:0.25rem;">مدیر ارشد تحول دیجیتال، بانکداری هوشمند و راهبری فناوری اطلاعات</p>
+                </div>
+                <div style="display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.88rem;">
+                    <span>تلفن: <a href="tel:09125730084" style="color:var(--gold-primary); text-decoration:none;" class="ltr-inline">09125730084</a></span>
+                    <span>ایمیل: <a href="mailto:golmohammady@yahoo.com" style="color:var(--gold-primary); text-decoration:none;" class="ltr-inline">golmohammady@yahoo.com</a></span>
+                    <span>لینکدین: <a href="https://www.linkedin.com/in/hamid-golmohammadi" target="_blank" rel="noopener" style="color:var(--gold-primary); text-decoration:none;" class="ltr-inline">linkedin.com/in/hamid-golmohammadi</a></span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- کانتینر اختصاصی برگه‌های A4 با فوتر و شماره صفحه دقیق در سمت چپ پایین -->
+    <div id="printPagesContainer" aria-hidden="true"></div>
+
+    <script>
+        let currentQrUrl = 'https://hgolmohammadi.github.io/Resume/';
+
+        function buildQrApiUrl(targetUrl, sizePx) {
+            return 'https://api.qrserver.com/v1/create-qr-code/?size=' + sizePx + 'x' + sizePx + '&margin=4&color=0B1528&bgcolor=FFFFFF&data=' + encodeURIComponent(targetUrl);
+        }
+
+        function renderQrCodes(url) {
+            const heroImg = document.getElementById('heroQrImg');
+            const modalImg = document.getElementById('modalQrImg');
+            const dlLink = document.getElementById('downloadQrLink');
+            if (heroImg) heroImg.src = buildQrApiUrl(url, 160);
+            if (modalImg) modalImg.src = buildQrApiUrl(url, 220);
+            if (dlLink) dlLink.href = buildQrApiUrl(url, 400);
+        }
+
+        function openQrModal() {
+            const input = document.getElementById('qrUrlInput');
+            if (input) input.value = currentQrUrl;
+            document.getElementById('qrModalBackdrop').classList.add('open');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModalBackdrop').classList.remove('open');
+        }
+
+        function updateQrCodeUrl() {
+            const inputVal = document.getElementById('qrUrlInput').value.trim();
+            if (inputVal) {
+                currentQrUrl = inputVal;
+                renderQrCodes(currentQrUrl);
+            }
+        }
+
+        function toggleRole(headerEl) {
+            const item = headerEl.parentElement;
+            item.classList.toggle('collapsed');
+            const indicator = headerEl.querySelector('.toggle-indicator');
+            if (indicator) {
+                indicator.textContent = item.classList.contains('collapsed') ? 'نمایش جزئیات ▾' : 'بستن جزئیات ▴';
+            }
+        }
+
+        const filterButtons = document.querySelectorAll('.filter-btn[data-filter]');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                timelineItems.forEach(item => {
+                    item.style.display = (filter === 'all' || item.getAttribute('data-category') === filter) ? 'block' : 'none';
+                });
+            });
+        });
+
+        let allExpanded = true;
+        document.getElementById('toggleAllBtn').addEventListener('click', () => {
+            allExpanded = !allExpanded;
+            timelineItems.forEach(item => {
+                const indicator = item.querySelector('.toggle-indicator');
+                if (allExpanded) {
+                    item.classList.remove('collapsed');
+                    if (indicator) indicator.textContent = 'بستن جزئیات ▴';
+                } else {
+                    item.classList.add('collapsed');
+                    if (indicator) indicator.textContent = 'نمایش جزئیات ▾';
+                }
+            });
+        });
+
+        const themeToggle = document.getElementById('themeToggle');
+        const themeLabel = document.getElementById('themeLabel');
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeLabel.textContent = 'حالت تاریک';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeLabel.textContent = 'حالت روشن';
+            }
+        });
+
+        function toPersianDigits(num) {
+            return String(num).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        }
+
+        const originalTitle = document.title;
+        let isPrintPrepared = false;
+
+        function buildA4PrintSheets() {
+            if (isPrintPrepared) return;
+            isPrintPrepared = true;
+
+            document.title = ' ';
+            const printContainer = document.getElementById('printPagesContainer');
+            printContainer.innerHTML = '';
+
+            timelineItems.forEach(item => {
+                item.style.display = 'block';
+                item.classList.remove('collapsed');
+            });
+
+            document.body.classList.add('preparing-print');
+
+            const blocks = [];
+            blocks.push({ el: document.querySelector('#top').cloneNode(true) });
+            blocks.push({ el: document.querySelector('#profile').cloneNode(true) });
+            blocks.push({ el: document.querySelector('#competencies').cloneNode(true) });
+
+            const expHeader = document.querySelector('#experience .section-header').cloneNode(true);
+            const expItems = Array.from(document.querySelectorAll('#careerTimeline .timeline-item')).map(el => {
+                const clonedItem = el.cloneNode(true);
+                clonedItem.querySelectorAll('.toggle-indicator').forEach(ind => ind.remove());
+                return clonedItem;
+            });
+
+            if (expItems.length > 0) {
+                const firstExpGroup = document.createElement('div');
+                firstExpGroup.appendChild(expHeader);
+                const firstTimelineWrap = document.createElement('div');
+                firstTimelineWrap.className = 'timeline';
+                firstTimelineWrap.appendChild(expItems[0]);
+                firstExpGroup.appendChild(firstTimelineWrap);
+                blocks.push({ el: firstExpGroup });
+
+                for (let i = 1; i < expItems.length; i++) {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'timeline';
+                    wrap.appendChild(expItems[i]);
+                    blocks.push({ el: wrap });
+                }
+            }
+
+            blocks.push({ el: document.querySelector('#achievements').cloneNode(true) });
+            blocks.push({ el: document.querySelector('#education').cloneNode(true) });
+
+            const pubHeader = document.querySelector('#publications .section-header').cloneNode(true);
+            const pubPanel = document.querySelector('#publicationsPanel').cloneNode(true);
+            const pubFirstGroup = document.createElement('section');
+            pubFirstGroup.id = 'publications';
+            pubFirstGroup.appendChild(pubHeader);
+            const gridWrap1 = document.createElement('div');
+            gridWrap1.className = 'edu-cert-grid';
+            gridWrap1.appendChild(pubPanel);
+            pubFirstGroup.appendChild(gridWrap1);
+            blocks.push({ el: pubFirstGroup });
+
+            const skillsPanel = document.querySelector('#skillsPanel').cloneNode(true);
+            const pubSecondGroup = document.createElement('section');
+            pubSecondGroup.id = 'publications';
+            const gridWrap2 = document.createElement('div');
+            gridWrap2.className = 'edu-cert-grid';
+            gridWrap2.appendChild(skillsPanel);
+            pubSecondGroup.appendChild(gridWrap2);
+            blocks.push({ el: pubSecondGroup });
+
+            document.body.classList.remove('preparing-print');
+            document.body.classList.add('printing-active');
+
+            const sheets = [];
+            function createNewSheet() {
+                const sheet = document.createElement('div');
+                sheet.className = 'print-a4-sheet';
+                const contentArea = document.createElement('div');
+                contentArea.className = 'print-sheet-content';
+                const footerArea = document.createElement('footer');
+                footerArea.className = 'print-sheet-footer';
+                sheet.appendChild(contentArea);
+                sheet.appendChild(footerArea);
+                printContainer.appendChild(sheet);
+                sheets.push({ sheet, contentArea, footerArea });
+                return sheets[sheets.length - 1];
+            }
+
+            let currentSheet = createNewSheet();
+
+            blocks.forEach(block => {
+                currentSheet.contentArea.appendChild(block.el);
+                const maxAllowedHeight = currentSheet.sheet.clientHeight - 68;
+                if (currentSheet.contentArea.scrollHeight > maxAllowedHeight && currentSheet.contentArea.children.length > 1) {
+                    currentSheet.contentArea.removeChild(block.el);
+                    currentSheet = createNewSheet();
+                    currentSheet.contentArea.appendChild(block.el);
+                }
+            });
+
+            const totalPages = sheets.length;
+            sheets.forEach((s, idx) => {
+                const pageNumFa = toPersianDigits(idx + 1);
+                const totalPagesFa = toPersianDigits(totalPages);
+                s.footerArea.innerHTML = `
+                    <div class="print-footer-right">
+                        حمید گل‌محمدی | مدیر ارشد تحول دیجیتال، بانکداری هوشمند و راهبری فناوری اطلاعات
+                    </div>
+                    <div class="print-footer-left">
+                        صفحه ${pageNumFa} از ${totalPagesFa}
+                    </div>
+                `;
+            });
+        }
+
+        function cleanupPrintSheets() {
+            if (!isPrintPrepared) return;
+            isPrintPrepared = false;
+            document.body.classList.remove('preparing-print', 'printing-active');
+            document.getElementById('printPagesContainer').innerHTML = '';
+            document.title = originalTitle;
+        }
+
+        function triggerExecutivePrint() {
+            buildA4PrintSheets();
+            setTimeout(() => { window.print(); }, 80);
+        }
+
+        window.addEventListener('beforeprint', buildA4PrintSheets);
+        window.addEventListener('afterprint', cleanupPrintSheets);
+    </script>
+</body>
+</html>
