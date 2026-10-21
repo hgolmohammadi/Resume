@@ -178,6 +178,22 @@
         @media screen and (max-width: 480px) { #printToolbar .pt-title { display: none; } }
         @media print { #printToolbar { display: none !important; } #printPagesContainer { zoom: 1 !important; } }
 
+        /* ===== چیدمان کارت‌های توانمندی: کارت آخرِ تنها، تمام‌عرض می‌شود ===== */
+        @media (min-width: 992px) { .competencies-grid > .comp-card:last-child:nth-child(3n+1) { grid-column: 1 / -1; } }
+        body.preparing-print .competencies-grid > .comp-card:last-child:nth-child(3n+1),
+        body.printing-active .competencies-grid > .comp-card:last-child:nth-child(3n+1) { grid-column: 1 / -1 !important; }
+
+        /* ===== چاپ / PDF: صفحه چاپی سفید است، پس رنگ متن‌ها باید تیره باشد.
+           در حالت تاریک سایت متن‌ها روشن‌اند و روی کاغذ سفید دیده نمی‌شوند؛ پس هنگام چاپ و پیش‌نمایش چاپ،
+           پالت رنگی روشن (متن تیره) اعمال می‌شود و بعد از بستن پیش‌نمایش، تم انتخابی کاربر برمی‌گردد ===== */
+        html[data-theme="dark"] body.preparing-print, html[data-theme="dark"] body.printing-active {
+            --bg-primary: #F8FAFC; --bg-secondary: #FFFFFF; --bg-elevated: #F1F5F9;
+            --text-primary: #0F172A; --text-secondary: #334155; --text-muted: #64748B;
+            --navy-deep: #0B1528; --gold-primary: #C5A059; --gold-light: #FBF7F0;
+            --gold-border: #E6D3A7; --teal-accent: #0D9488; --border-color: #E2E8F0;
+            --shadow-sm: 0 1px 3px rgba(15,23,42,0.06); --shadow-md: 0 10px 25px -5px rgba(15,23,42,0.08);
+        }
+
         /* مودال QR Code */
         .qr-modal-backdrop {
             position: fixed; inset: 0; background: rgba(6,11,22,0.78); backdrop-filter: blur(6px);
@@ -402,7 +418,6 @@
                 <li><a href="#profile">پروفایل مدیریتی</a></li>
                 <li><a href="#competencies">حوزه‌های توانمندی</a></li>
                 <li><a href="#experience">مسیر حرفه‌ای</a></li>
-                <li><a href="#achievements">دستاوردها و برنامه‌ها</a></li>
                 <li><a href="#education">تحصیلات و گواهینامه‌ها</a></li>
                 <li><a href="#publications">تألیفات و مهارت‌ها</a></li>
             </ul>
@@ -431,7 +446,7 @@
                     <div class="biz-text">
                         <div class="biz-brand"><span class="biz-badge">ح‌گ</span><span class="t">EXECUTIVE</span></div>
                         <div class="biz-name">حمید گل‌محمدی</div>
-                        <div class="biz-sub">مدیر ارشد تحول دیجیتال و بانکداری هوشمند</div>
+                        <div class="biz-sub">تحول دیجیتال و بانکداری هوشمند</div>
                         <div class="biz-rule"></div>
                         <div class="biz-pos">
                             <div><div class="l">رئیس هیئت‌مدیره</div><div class="v">شرکت نوین‌تک (Novin Tech)</div></div>
@@ -485,7 +500,6 @@
         <a href="#profile" data-target="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>پروفایل</span></a>
         <a href="#competencies" data-target="competencies"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg><span>توانمندی</span></a>
         <a href="#experience" data-target="experience"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><span>مسیر حرفه‌ای</span></a>
-        <a href="#achievements" data-target="achievements"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg><span>دستاوردها</span></a>
         <a href="#education" data-target="education"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5zM6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/></svg><span>تحصیلات</span></a>
         <a href="#publications" data-target="publications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M8 7h7"/></svg><span>تألیفات</span></a>
     </nav>
@@ -503,22 +517,22 @@
                         <span>صنعت بانکداری، فین‌تک و فناوری اطلاعات</span>
                     </div>
                     <h1 class="hero-name">حمید گل‌محمدی</h1>
-                    <p class="hero-title">مدیر ارشد تحول دیجیتال، بانکداری هوشمند و راهبری فناوری اطلاعات</p>
+                    <p class="hero-title">مدیر تحول دیجیتال و بانکداری هوشمند | رئیس هیئت‌مدیره نوین‌تک</p>
                     <p class="hero-subtitle">
-                        رهبر راهبردی فناوری اطلاعات و تحول دیجیتال با بیش از دو دهه سابقه مدیریتی، اجرایی و پژوهشی در شبکه بانکی کشور، شرکت‌های فناوری مالی (FinTech) و نهادهای کلان تجارت الکترونیکی. متخصص در پیوند دادن استراتژی‌های کلان کسب‌وکار با معماری فناوری‌های نوین بانکی، طراحی سامانه‌های هوشمند مدیریتی مبتنی بر هوش مصنوعی، راهبری دفتر مدیریت پروژه‌های سازمانی (ePMO) و سرمایه‌گذاری‌های فناورانه.
+مدیر تحول دیجیتال با بیش از دو دهه سابقه حرفه‌ای در فناوری اطلاعات، بانکداری و تجارت الکترونیکی، که بیش از یک دهه آن در سطح مدیریت بوده است. دارای سابقه در شبکه بانکی کشور، شرکت‌های فناوری مالی (FinTech) و نهادهای ملی تجارت الکترونیکی. متخصص در همراستاسازی راهبرد کسب‌وکار با معماری فناوری بانکی، طراحی سامانه‌های مدیریتی مبتنی بر هوش مصنوعی، راهبری دفتر مدیریت پروژه‌های سازمانی (EPMO) و سرمایه‌گذاری‌های فناورانه.
                     </p>
                     <div class="hero-badges">
                         <span class="hero-badge">تحول دیجیتال و بانکداری هوشمند</span>
                         <span class="hero-badge">حاکمیت شرکتی و هدایت هیئت‌مدیره</span>
-                        <span class="hero-badge">مدیریت پورتفولیو و پروژه‌های کلان (ePMO)</span>
-                        <span class="hero-badge">برنامه‌ریزی راهبردی (BSC / OKR / SWOT)</span>
+                        <span class="hero-badge">مدیریت پورتفولیو و پروژه‌های کلان (EPMO)</span>
+                        <span class="hero-badge">برنامه‌ریزی راهبردی (BSC / OKR، تحلیل SWOT)</span>
                         <span class="hero-badge">دستیارهای هوشمند بانکی و RegTech</span>
                     </div>
                 </div>
 
                 <!-- باکس جایگاه‌های راهبردی کنونی + ویجت QR Code -->
                 <aside class="hero-card" aria-label="خلاصه جایگاه‌های فعلی و اطلاعات تماس">
-                    <div class="hero-card-title">جایگاه‌های راهبردی کنونی</div>
+                    <div class="hero-card-title">سمت‌های فعلی</div>
                     <div class="hero-card-top-grid">
                         <ul class="hero-stat-list">
                             <li class="hero-stat-item">
@@ -562,15 +576,15 @@
             <!-- ۲. پروفایل حرفه‌ای و چکیده مدیریتی -->
             <section id="profile">
                 <div class="section-header">
-                    <h2 class="section-title">پروفایل حرفه‌ای و چکیده مدیریتی</h2>
+                    <h2 class="section-title">چکیده مدیریتی</h2>
                     <span class="section-title-en">Executive Profile</span>
                 </div>
                 <div class="profile-card">
                     <p>
-                        به‌عنوان <strong>مدیر تحول دیجیتال و بانکداری هوشمند بانک اقتصاد نوین</strong>، تمرکز حرفه‌ای من بر راهبری تحول دیجیتال، توسعه بانکداری هوشمند و ایجاد پیوند مؤثر میان فناوری، راهبردهای کسب‌وکار و تجربه مشتری است. در این مسیر، طراحی و توسعه سکوهای بانکداری دیجیتال، بهره‌گیری از هوش مصنوعی و تحلیل داده در تصمیم‌سازی و ارائه خدمات مالی، و توسعه مدل‌های نوین کسب‌وکار مبتنی بر اکوسیستم، از مهم‌ترین حوزه‌های فعالیت من به شمار می‌روند. رویکرد من بر خلق ارزش پایدار، ارتقای کارایی و چابکی سازمانی، بهبود تجربه مشتری و توسعه خدمات نوآورانه بانکی با رعایت الزامات نظارتی و حفظ تاب‌آوری عملیاتی استوار است.
+به‌عنوان <strong>مدیر تحول دیجیتال و بانکداری هوشمند بانک اقتصاد نوین</strong>، تمرکز حرفه‌ای بر راهبری تحول دیجیتال، توسعه بانکداری هوشمند و ایجاد پیوند مؤثر میان فناوری، راهبرد کسب‌وکار و تجربه مشتری است. مهم‌ترین حوزه‌های فعالیت عبارت‌اند از طراحی و توسعه سکوهای بانکداری دیجیتال، بهره‌گیری از هوش مصنوعی و تحلیل داده در تصمیم‌سازی و ارائه خدمات مالی، و توسعه مدل‌های نوین کسب‌وکار مبتنی بر اکوسیستم. رویکرد حرفه‌ای بر ایجاد ارزش پایدار، ارتقای کارایی و چابکی سازمانی، بهبود تجربه مشتری و توسعه خدمات نوآورانه بانکی، با رعایت الزامات نظارتی و حفظ تاب‌آوری عملیاتی استوار است.
                     </p>
                     <p>
-                        پشتوانه این رویکرد، بیش از دو دهه تجربه حرفه‌ای در حوزه فناوری اطلاعات، مدیریت و تحول سازمانی است که بخش مهمی از آن در مسئولیت‌های مدیریتی و راهبردی شکل گرفته است. بیش از یک دهه فعالیت در <strong>شرکت داده‌ورزی سداد</strong>، در جایگاه مدیر دفتر مدیریت پروژه‌های سازمانی (<span class="ltr-inline">ePMO</span>) و معاون طرح و برنامه، در کنار مشارکت در پروژه‌های ملی <strong>سازمان امور مالیاتی (طرح جامع)</strong> و <strong>مرکز توسعه تجارت الکترونیکی</strong>، از جمله نماد اعتماد الکترونیکی و پنجره واحد تجاری، فرصت کسب تجربه در برنامه‌ریزی راهبردی و عملیاتی، مدیریت سبد پروژه‌ها، بازمهندسی فرایندها، معماری داده‌های سازمانی، مدیریت عملکرد، بودجه‌ریزی و هدایت تیم‌های تخصصی را برای من فراهم کرده است.
+پشتوانه این رویکرد، بیش از دو دهه تجربه حرفه‌ای در حوزه فناوری اطلاعات، مدیریت و تحول سازمانی است که بخش مهمی از آن در مسئولیت‌های مدیریتی و راهبردی شکل گرفته است. بیش از یک دهه از این تجربه در <strong>شرکت داده‌ورزی سداد</strong> و در سمت‌های مدیر دفتر مدیریت پروژه‌های سازمانی (<span class="ltr-inline">EPMO</span>) و معاون طرح و برنامه بوده است. افزون بر آن، مشارکت در پروژه‌های ملی <strong>سازمان امور مالیاتی (طرح جامع)</strong> و <strong>مرکز توسعه تجارت الکترونیکی</strong>، از جمله نماد اعتماد الکترونیکی (ای‌نماد) و پنجره واحد تجاری، تجربه عملی در برنامه‌ریزی راهبردی و عملیاتی، مدیریت سبد پروژه‌ها، بازمهندسی فرایندها، معماری داده‌های سازمانی، مدیریت عملکرد، بودجه‌ریزی و هدایت تیم‌های تخصصی را به همراه داشته است.
                     </p>
                 </div>
             </section>
@@ -587,35 +601,35 @@
                             <span class="comp-title">تحول دیجیتال و بانکداری هوشمند</span>
                             <span class="comp-tag">Smart Banking</span>
                         </div>
-                        <p class="comp-desc">راهبری پلتفرم‌های موبایل‌بانک، اینترنت‌بانک و سوپراپ، استقرار مدل‌های بانکداری مبتنی بر پلتفرم (BaaP) و مالیه تعبیه‌شده (Embedded Finance).</p>
+                        <p class="comp-desc">راهبری تحول دیجیتال بانک با ایجاد حوزه‌های کسب‌وکار جدید، بازطراحی شیوه انجام کار و تعریف طرح‌های نوآورانه مبتنی بر فناوری‌های نوین و هوش مصنوعی.</p>
                     </div>
                     <div class="comp-card">
                         <div class="comp-card-header">
                             <span class="comp-title">حاکمیت شرکتی و سرمایه‌گذاری فناورانه</span>
                             <span class="comp-tag">Board Governance</span>
                         </div>
-                        <p class="comp-desc">تدوین چشم‌انداز بلندمدت در سطح هیئت‌مدیره، ریاست کمیته سرمایه‌گذاری و ارزیابی ادغام و تملیک (M&A) در حوزه‌های FinTech، HealthTech و TravelTech.</p>
+                        <p class="comp-desc">تدوین چشم‌انداز بلندمدت در سطح هیئت‌مدیره، ریاست کمیته سرمایه‌گذاری، ارزیابی و تصویب سرمایه‌گذاری‌های راهبردی و پرونده‌های ادغام و تملیک (M&A) در حوزه‌های FinTech، HealthTech و TravelTech.</p>
                     </div>
                     <div class="comp-card">
                         <div class="comp-card-header">
                             <span class="comp-title">راهبری دفتر مدیریت پروژه سازمانی</span>
                             <span class="comp-tag">Enterprise PMO</span>
                         </div>
-                        <p class="comp-desc">طراحی چرخه حیات مدیریت پروژه، مدل‌سازی داده جامع و پیاده‌سازی داشبوردهای مدیریتی پایش پروژه، قرارداد، بودجه و صورتحساب‌های فناوری اطلاعات.</p>
+                        <p class="comp-desc">طراحی و استقرار چرخه حیات مدیریت پروژه، مدل‌سازی داده مرجع و پیاده‌سازی داشبوردهای مدیریتی (از جمله داشبوردهای تصمیم‌یار مدیرعامل بر بستر Jira، eazyBI و Confluence) برای پایش پروژه، قرارداد، بودجه و صورتحساب‌های فناوری اطلاعات.</p>
                     </div>
                     <div class="comp-card">
                         <div class="comp-card-header">
-                            <span class="comp-title">برنامه‌ریزی استراتژیک، بودجه و فرآیند</span>
+                            <span class="comp-title">برنامه‌ریزی راهبردی، بودجه و فرایند</span>
                             <span class="comp-tag">Strategy & Planning</span>
                         </div>
-                        <p class="comp-desc">تدوین برنامه‌های راهبردی و عملیاتی مبتنی بر BSC، OKR و SWOT، بودجه‌ریزی سالانه شرکت اصلی و شرکت‌های تابعه، و مهندسی مجدد فرآیندها و ساختار سازمانی.</p>
+                        <p class="comp-desc">تدوین برنامه‌های راهبردی و عملیاتی مبتنی بر BSC و OKR (با تحلیل محیطی SWOT)، بودجه‌ریزی سالانه شرکت اصلی و پایش بودجه هلدینگ و شرکت‌های تابعه، بازمهندسی فرایندها و ساختار سازمانی، و استقرار سامانه‌های سازمانی (از جمله سامانه مدیریت اسناد DMS و مکاتبات).</p>
                     </div>
                     <div class="comp-card">
                         <div class="comp-card-header">
                             <span class="comp-title">حاکمیت داده و هوش مصنوعی در بانکداری</span>
                             <span class="comp-tag">Data & AI Strategy</span>
                         </div>
-                        <p class="comp-desc">هدایت حاکمیت داده سازمانی، تحلیل‌های بلادرنگ، اعتبارسنجی مشتریان با یادگیری ماشین (Credit Scoring)، نظارت هوشمند (RegTech) و کشف تقلب.</p>
+                        <p class="comp-desc">هدایت حاکمیت داده سازمانی، تحلیل‌های بلادرنگ، اعتبارسنجی مشتریان با یادگیری ماشین (Credit Scoring)، انطباق هوشمند (RegTech) و شناسایی تقلب.</p>
                     </div>
                     <div class="comp-card">
                         <div class="comp-card-header">
@@ -643,7 +657,14 @@
                             <span class="comp-title">تفکر طراحی، چابک‌سازی و اتوماسیون</span>
                             <span class="comp-tag">Design & Automation</span>
                         </div>
-                        <p class="comp-desc">به‌کارگیری تفکر طراحی (Design Thinking)، تیم‌سازی چابک (Agile)، اتوماسیون فرآیندهای هوشمند با N8N و نمونه‌سازی سریع محصولات دیجیتال (Vibe Coding).</p>
+                        <p class="comp-desc">به‌کارگیری تفکر طراحی (Design Thinking)، راهبری تیم‌های چابک (Agile)، اتوماسیون گردش‌کار (Workflow Automation) با n8n و نمونه‌سازی سریع محصولات دیجیتال با هوش مصنوعی مولد (AI-assisted Prototyping).</p>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-card-header">
+                            <span class="comp-title">تجارت الکترونیکی و تسهیل تجاری</span>
+                            <span class="comp-tag">E-Commerce & Trade Facilitation</span>
+                        </div>
+                        <p class="comp-desc">تحلیل کسب‌وکار، مدیریت پروژه و آموزش و توسعه در پروژه‌های ملی نماد اعتماد الکترونیکی (ای‌نماد)، پنجره واحد تجاری و طرح جامع مالیاتی، و برگزاری نخستین جشنواره ملی خرید اینترنتی.</p>
                     </div>
                 </div>
             </section>
@@ -686,7 +707,7 @@
                         <div class="timeline-body">
                             <p>راهبری کلان راهبردی و استقرار اصول حاکمیت شرکتی در سطح هیئت‌مدیره:</p>
                             <ul class="timeline-list">
-                                <li>همراهی و هدایت هیئت‌مدیره در ترسیم چشم‌انداز استراتژیک بلندمدت شرکت و تضمین پیاده‌سازی بهترین تجارب حاکمیت شرکتی (Corporate Governance).</li>
+                                <li>همراهی و هدایت هیئت‌مدیره در ترسیم چشم‌انداز راهبردی بلندمدت شرکت و تضمین پیاده‌سازی بهترین‌روش‌های (Best Practices) حاکمیت شرکتی (Corporate Governance).</li>
                                 <li><strong>ریاست کمیته سرمایه‌گذاری (Investment Committee):</strong> شناسایی، ارزیابی تخصصی و تصویب سرمایه‌گذاری‌های راهبردی و پرونده‌های ادغام و تملیک (M&A) در بخش‌های فناورانه با رشد بالا شامل فین‌تک (FinTech)، سلامت دیجیتال (HealthTech) و فناوری گردشگری (TravelTech).</li>
                                 <li>ایفای نقش مشاور راهبردی و منتور برای مدیرعامل و تیم اجرایی در ابتکارات کلیدی و برنامه‌های توسعه‌ای شرکت.</li>
                                 <li>ترویج فرهنگ نوآوری سازمانی با هدف تحقق رشد پایدار و ارتقای ارزش بلندمدت سهامداران.</li>
@@ -702,7 +723,7 @@
                                     مدیر تحول دیجیتال و بانکداری هوشمند (Digital Transformation & Smart Banking Manager)
                                     <span class="badge-current">هم‌اکنون</span>
                                 </h3>
-                                <div class="role-org">بانک اقتصاد نوین (EghtesadNovin Bank)</div>
+                                <div class="role-org">بانک اقتصاد نوین (EN Bank)</div>
                                 <div class="role-meta">
                                     <span>بهمن ۱۴۰۳ – تاکنون (<span class="ltr-inline">February 2025 – Present</span>)</span>
                                     <span>•</span>
@@ -712,7 +733,7 @@
                             <span class="toggle-indicator">بستن جزئیات ▴</span>
                         </div>
                         <div class="timeline-body">
-                            <p>هدایت چرخش راهبردی بانک به‌سوی خدمات مالی آینده‌نگر، مشتری‌محور و مبتنی بر فناوری از طریق طراحی، پیاده‌سازی و مقیاس‌دهی ابتکارات در کانال‌های بانکداری خرد، شرکتی و دیجیتال با تضمین تاب‌آوری عملیاتی و انطباق رگولاتوری:</p>
+                            <p>هدایت چرخش راهبردی بانک به‌سوی خدمات مالی آینده‌نگر، مشتری‌محور و مبتنی بر فناوری از طریق طراحی، پیاده‌سازی و مقیاس‌دهی ابتکارات در کانال‌های بانکداری خرد، شرکتی و دیجیتال با تضمین تاب‌آوری عملیاتی و انطباق با الزامات نظارتی:</p>
                             <div class="sub-category-title">الف) طرح‌ها و دستاوردهای کلیدی پیاده‌سازی‌شده:</div>
                             <ul class="timeline-list">
                                 <li>ارائه طرح و مشارکت در پیاده‌سازی <strong>سامانه آنلاین فروش طلا (کارات ۲۴)</strong>.</li>
@@ -727,18 +748,18 @@
                             <div class="sub-category-title">ب) محورهای راهبری و مسئولیت‌های کلان:</div>
                             <ul class="timeline-list">
                                 <li><strong>پلتفرم‌های بانکداری دیجیتال:</strong> نظارت عالی بر توسعه و بهینه‌سازی راهبردهای موبایل‌بانک، اینترنت‌بانک و سوپراپ، با یکپارچه‌سازی مدل‌های بانکداری مبتنی بر پلتفرم (BaaP) و مالیه تعبیه‌شده (Embedded Finance).</li>
-                                <li><strong>ابتکارات بانکداری هوشمند و راهبرد داده:</strong> پیاده‌سازی راهکارهای هوش مصنوعی (AI)، حاکمیت داده سازمانی، تحلیل‌های بلادرنگ، اعتبارسنجی هوشمند (Credit Scoring)، کشف تقلب و شخصی‌سازی خدمات.</li>
+                                <li><strong>ابتکارات بانکداری هوشمند و راهبرد داده:</strong> پیاده‌سازی راهکارهای هوش مصنوعی (AI)، حاکمیت داده سازمانی، تحلیل‌های بلادرنگ، اعتبارسنجی هوشمند (Credit Scoring)، شناسایی تقلب و شخصی‌سازی خدمات.</li>
                                 <li><strong>نظام‌های پرداخت، کارت و محصولات نوین:</strong> راهبری نوسازی سامانه‌های کارتی، مهاجرت به استاندارد EMV، توسعه محصولات اعتباری BNPL، حساب‌های سپرده طلا، پایلوت‌های ریال دیجیتال و کاربردهای بلاکچین.</li>
                                 <li><strong>بانکداری شرکتی، SME و توسعه اکوسیستم:</strong> پشتیبانی از پذیرش دیجیتال مشتریان (Digital Onboarding)، خدمات مبتنی بر API و ایجاد مشارکت‌های راهبردی با فین‌تک‌ها و پلتفرم‌های تجارت الکترونیکی.</li>
                             </ul>
                         </div>
                     </article>
 
-                    <!-- ۳. شرکت داده‌ورزی سداد - مدیر ePMO -->
+                    <!-- ۳. شرکت داده‌ورزی سداد - مدیر EPMO -->
                     <article class="timeline-item" data-category="banking">
                         <div class="timeline-header" onclick="toggleRole(this)">
                             <div class="role-main">
-                                <h3 class="role-title">مدیر دفتر مدیریت پروژه‌های سازمانی (Manager of Enterprise PMO - ePMO)</h3>
+                                <h3 class="role-title">مدیر دفتر مدیریت پروژه‌های سازمانی (Manager of Enterprise PMO - EPMO)</h3>
                                 <div class="role-org">شرکت داده‌ورزی سداد (Sadad Informatic Corporation) — سابقه کل در سداد: ۱۰ سال و ۱ ماه</div>
                                 <div class="role-meta">
                                     <span>خرداد ۱۳۹۷ – بهمن ۱۴۰۳ (<span class="ltr-inline">June 2018 – February 2025 | 6 yrs 9 mos</span>)</span>
@@ -750,10 +771,10 @@
                         </div>
                         <div class="timeline-body">
                             <ul class="timeline-list">
-                                <li>طراحی و تدوین <strong>مدل داده جامع (Master Data Model)</strong> برای کلیه پروژه‌های شرکت داده‌ورزی سداد.</li>
-                                <li>طراحی و استقرار فرآیندهای چرخه حیات مدیریت پروژه (Project Management Life Cycle) در قالب سامانه یکپارچه مدیریت پروژه سازمانی.</li>
+                                <li>طراحی و تدوین <strong>مدل داده مرجع (Master Data Model)</strong> برای کلیه پروژه‌های شرکت داده‌ورزی سداد.</li>
+                                <li>طراحی و استقرار فرایندهای چرخه حیات مدیریت پروژه (Project Management Life Cycle) در قالب سامانه یکپارچه مدیریت پروژه سازمانی.</li>
                                 <li>آموزش، فرهنگ‌سازی و پشتیبانی تخصصی از تیم‌ها و کارکنان در طول دوره استقرار سیستم مدیریت پروژه.</li>
-                                <li>طراحی و پیاده‌سازی گزارش‌های کلان پروژه‌ها، شاخص‌های سنجش عملکرد و <strong>داشبوردهای مدیریتی ویژه مدیرعامل (CEO Dashboards)</strong> بر بستر ابزارهای <span class="ltr-inline">Jira (eazyBI)</span> و <span class="ltr-inline">Confluence</span>.</li>
+                                <li>طراحی و پیاده‌سازی گزارش‌های کلان پروژه‌ها، شاخص‌های سنجش عملکرد و <strong>داشبوردهای مدیریتی ویژه مدیرعامل (CEO Dashboards)</strong> بر بستر ابزارهای <span class="ltr-inline">Jira</span>، <span class="ltr-inline">eazyBI</span> و <span class="ltr-inline">Confluence</span>.</li>
                             </ul>
                         </div>
                     </article>
@@ -792,15 +813,15 @@
                             <span class="toggle-indicator">بستن جزئیات ▴</span>
                         </div>
                         <div class="timeline-body">
-                            <div class="sub-category-title">۱. مدیریت بهبود سازمانی و فرآیندها:</div>
+                            <div class="sub-category-title">۱. مدیریت بهبود سازمانی و فرایندها:</div>
                             <ul class="timeline-list">
-                                <li>طراحی و مستندسازی فرآیندهای سازمانی در حوزه‌های کارکردی و مدیریت واحدهای پشتیبان شامل امور اداری، هماهنگی بودجه، نقشه‌برداری فرآیندی، آموزش و اتوماسیون.</li>
+                                <li>طراحی و مستندسازی فرایندهای سازمانی در حوزه‌های کارکردی و مدیریت واحدهای پشتیبان شامل امور اداری، هماهنگی بودجه، نقشه‌برداری فرایندی، آموزش و اتوماسیون.</li>
                                 <li>بازنگری و اصلاح آیین‌نامه‌ها و مستندات شرکت به‌منظور ارتقای کارایی و اثربخشی فعالیت‌ها.</li>
                             </ul>
                             <div class="sub-category-title">۲. برنامه‌ریزی راهبردی و بودجه‌ریزی:</div>
                             <ul class="timeline-list">
-                                <li>تدوین برنامه استراتژیک و عملیاتی شرکت و انجام پایش‌های مقطعی بر اساس سیاست‌های مدیریت ارشد.</li>
-                                <li>تدوین بودجه سالانه شرکت به همراه نظارت بر فرآیند بودجه‌ریزی شرکت هلدینگ و شرکت‌های تابعه.</li>
+                                <li>تدوین برنامه راهبردی و عملیاتی شرکت و انجام پایش‌های مقطعی بر اساس سیاست‌های مدیریت ارشد.</li>
+                                <li>تدوین بودجه سالانه شرکت به همراه نظارت بر فرایند بودجه‌ریزی شرکت هلدینگ و شرکت‌های تابعه.</li>
                                 <li>ارزیابی عملکرد سازمانی و ارائه طرح‌های بهبود از طریق اصلاح ساختار سازمانی.</li>
                             </ul>
                             <div class="sub-category-title">۳. مدیریت و کنترل متمرکز پروژه‌ها:</div>
@@ -893,7 +914,7 @@
                             <span class="toggle-indicator">نمایش جزئیات ▾</span>
                         </div>
                         <div class="timeline-body">
-                            <p>مشارکت در پروژه ملی طرح جامع مالیاتی در جایگاه تحلیلگر فرآیندهای کسب‌وکار و مترجم تخصصی مستندات فنی و سازمانی در سازمان امور مالیاتی کشور.</p>
+                            <p>مشارکت در پروژه ملی طرح جامع مالیاتی در جایگاه تحلیلگر فرایندهای کسب‌وکار و مترجم تخصصی مستندات فنی و سازمانی در سازمان امور مالیاتی کشور.</p>
                         </div>
                     </article>
 
@@ -920,46 +941,6 @@
                         </div>
                     </article>
 
-                </div>
-            </section>
-
-            <!-- ۵ و ۶. دستاوردهای شاخص و برنامه‌های راهبردی -->
-            <section id="achievements">
-                <div class="section-header">
-                    <h2 class="section-title">دستاوردهای شاخص و برنامه‌های راهبردی</h2>
-                    <span class="section-title-en">Key Achievements & Strategic Programs</span>
-                </div>
-                <div class="cards-grid-2">
-                    <div class="achievement-card">
-                        <span class="achievement-org">بانک اقتصاد نوین</span>
-                        <h3 class="achievement-title">طراحی و استقرار سامانه‌های هوشمند، اطلس بانکی و داشبوردهای راهبری IT</h3>
-                        <p class="achievement-desc">ارائه طرح و مشارکت در پیاده‌سازی «سامانه دستیار هوشمند مدیریتی ویژه مدیران ارشد»، «سامانه دستیار هوشمند دستورالعمل‌ها و بخشنامه‌های بانک»، «سامانه اطلس هوشمند بانکی» و پیاده‌سازی «داشبورد مدیریتی پایش پروژه‌ها، قراردادها، بودجه و صورتحساب‌های معاونت فناوری اطلاعات».</p>
-                    </div>
-                    <div class="achievement-card">
-                        <span class="achievement-org">بانک اقتصاد نوین</span>
-                        <h3 class="achievement-title">نوآوری در محصولات مالی، کارات ۲۴ و تأمین مالی زنجیره تأمین (SCF)</h3>
-                        <p class="achievement-desc">ارائه طرح و مشارکت در پیاده‌سازی «سامانه آنلاین فروش طلا (کارات ۲۴)»، «طرح سپرده امانی»، «طرح تسویه آنی مطالبات کارگزاری تأمین سرمایه» و «سامانه تأمین مالی زنجیره تأمین (SCF)» در کنار راهبری پلتفرم‌های بانکداری دیجیتال.</p>
-                    </div>
-                    <div class="achievement-card">
-                        <span class="achievement-org">شرکت نوین‌تک</span>
-                        <h3 class="achievement-title">راهبری کمیته سرمایه‌گذاری و توسعه پورتفولیوی فناورانه</h3>
-                        <p class="achievement-desc">ریاست کمیته سرمایه‌گذاری هیئت‌مدیره جهت ارزیابی و تصویب سرمایه‌گذاری‌های راهبردی و تملیک (M&A) در حوزه‌های پرتقاضای FinTech، HealthTech و TravelTech.</p>
-                    </div>
-                    <div class="achievement-card">
-                        <span class="achievement-org">شرکت داده‌ورزی سداد</span>
-                        <h3 class="achievement-title">معماری مدل داده جامع و داشبوردهای مدیریتی ePMO</h3>
-                        <p class="achievement-desc">طراحی Master Data Model پروژه‌های سداد، استقرار کامل چرخه حیات مدیریت پروژه و ایجاد داشبوردهای تصمیم‌یار مدیرعامل بر بستر Jira (eazyBI) و Confluence.</p>
-                    </div>
-                    <div class="achievement-card">
-                        <span class="achievement-org">شرکت داده‌ورزی سداد</span>
-                        <h3 class="achievement-title">نظام بودجه‌ریزی هلدینگی و یکپارچه‌سازی سیستم‌های اطلاعاتی</h3>
-                        <p class="achievement-desc">تدوین برنامه‌های استراتژیک و بودجه سالانه شرکت و پایش بودجه هلدینگ و شرکت‌های تابعه در جایگاه معاون طرح و برنامه، به همراه استقرار سامانه‌های سازمانی از جمله DMS و مکاتبات.</p>
-                    </div>
-                    <div class="achievement-card">
-                        <span class="achievement-org">سازمان امور مالیاتی، وزارت صمت و مرکز توسعه تجارت الکترونیکی</span>
-                        <h3 class="achievement-title">پروژه‌های ملی نماد اعتماد الکترونیکی (eNamad)، پنجره واحد و طرح جامع مالیاتی</h3>
-                        <p class="achievement-desc">ایفای نقش کلیدی در تحلیل کسب‌وکار، مدیریت پروژه، آموزش و توسعه نماد اعتماد الکترونیکی، برگزاری نخستین جشنواره ملی خرید اینترنتی، پروژه پنجره واحد تجاری و طرح جامع مالیاتی.</p>
-                    </div>
                 </div>
             </section>
 
@@ -997,12 +978,12 @@
                                 <span class="item-muted">راهبری تحول دیجیتال و بانکداری نوین در شبکه بانکی کشور</span>
                             </li>
                             <li class="clean-list-item">
-                                <span class="item-primary">گواهینامه حرفه‌ای تحلیل کسب‌وکار (PMI-PBA)</span>
+                                <span class="item-primary">گواهینامه حرفه‌ای تحلیل کسب‌وکار</span>
                                 <span class="item-secondary ltr-inline">PMI Professional in Business Analysis (PMI-PBA)</span>
                                 <span class="item-muted">استاندارد بین‌المللی تحلیل کسب‌وکار از مؤسسه مدیریت پروژه (PMI)</span>
                             </li>
                             <li class="clean-list-item">
-                                <span class="item-primary">راهکارهای بانکداری متمرکز (Core Banking Solutions)</span>
+                                <span class="item-primary">راهکارهای بانکداری متمرکز</span>
                                 <span class="item-secondary ltr-inline">Core Banking Solutions</span>
                                 <span class="item-muted">معماری و راهکارهای سامانه‌های جامع بانکی</span>
                             </li>
@@ -1025,7 +1006,7 @@
 
                 <div class="edu-cert-grid">
                     <div class="box-panel" id="publicationsPanel">
-                        <h3 class="box-panel-title">آثار علمی، کتب و مقالات (به ترتیب سال انتشار)</h3>
+                        <h3 class="box-panel-title">آثار علمی و تألیفات (از جدیدترین)</h3>
                         <ul class="clean-list publications-list">
                             <li class="clean-list-item">
                                 <div class="item-header-row">
@@ -1104,7 +1085,7 @@
                     </div>
 
                     <div class="box-panel" id="skillsPanel">
-                        <h3 class="box-panel-title">خوشه‌بندی مهارت‌ها و توانمندی‌های زبانی</h3>
+                        <h3 class="box-panel-title">دسته‌بندی مهارت‌ها و زبان‌ها</h3>
                         <div class="skills-groups-wrapper">
                             <div class="skill-group-block">
                                 <div class="item-primary" style="margin-bottom:0.4rem;">مدیریت محصول، نوآوری و راهکارهای بانکی:</div>
@@ -1114,20 +1095,20 @@
                                     <span class="skill-pill">توسعه محصول (Product Development)</span>
                                     <span class="skill-pill">Core Banking</span>
                                     <span class="skill-pill">تفکر طراحی (Design Thinking)</span>
-                                    <span class="skill-pill">وایب کدینگ (Vibe Coding)</span>
-                                    <span class="skill-pill">N8N Automation</span>
-                                    <span class="skill-pill">تیم‌سازی چابک (Agile Team Building)</span>
+                                    <span class="skill-pill">نمونه‌سازی سریع با هوش مصنوعی مولد (AI-assisted Prototyping)</span>
+                                    <span class="skill-pill">n8n Workflow Automation</span>
+                                    <span class="skill-pill">راهبری تیم‌های چابک (Agile Team Leadership)</span>
                                 </div>
                             </div>
 
                             <div class="skill-group-block">
                                 <div class="item-primary" style="margin-bottom:0.4rem;">راهبری، برنامه‌ریزی و ابزارهای مدیریتی:</div>
                                 <div class="skill-tag-cloud">
-                                    <span class="skill-pill">برنامه‌ریزی استراتژیک (BSC, OKR, SWOT)</span>
-                                    <span class="skill-pill">مهندسی مجدد فرآیندها (BPR)</span>
-                                    <span class="skill-pill">مدیریت دفتر پروژه (ePMO)</span>
+                                    <span class="skill-pill">برنامه‌ریزی راهبردی (BSC و OKR، با تحلیل SWOT)</span>
+                                    <span class="skill-pill">بازمهندسی فرایندها (BPR)</span>
+                                    <span class="skill-pill">مدیریت دفتر پروژه (EPMO)</span>
                                     <span class="skill-pill">تحلیل کسب‌وکار (PMI-PBA)</span>
-                                    <span class="skill-pill">Jira (eazyBI) & Confluence</span>
+                                    <span class="skill-pill">Jira، eazyBI و Confluence</span>
                                     <span class="skill-pill">مدل‌سازی داده (GEFEG FX)</span>
                                 </div>
                             </div>
@@ -1135,9 +1116,9 @@
                             <div class="skill-group-block">
                                 <div class="item-primary" style="margin-bottom:0.4rem;">زبان‌های خارجی:</div>
                                 <div class="skill-tag-cloud">
-                                    <span class="skill-pill">انگلیسی: توانمندی حرفه‌ای کاری (Professional Working)</span>
-                                    <span class="skill-pill">آلمانی: آشنایی کاری محدود (Limited Working)</span>
-                                    <span class="skill-pill">فرانسوی: آشنایی کاری محدود (Limited Working)</span>
+                                    <span class="skill-pill">انگلیسی: تسلط حرفه‌ای در محیط کار (Professional Working)</span>
+                                    <span class="skill-pill">آلمانی: تسلط محدود کاری (Limited Working)</span>
+                                    <span class="skill-pill">فرانسوی: تسلط محدود کاری (Limited Working)</span>
                                 </div>
                             </div>
                         </div>
@@ -1152,7 +1133,7 @@
             <div class="footer-inner">
                 <div>
                     <strong style="color:#FFFFFF; font-size:1.05rem;">حمید گل‌محمدی</strong>
-                    <p style="font-size:0.85rem; margin-top:0.25rem;">مدیر ارشد تحول دیجیتال، بانکداری هوشمند و راهبری فناوری اطلاعات</p>
+                    <p style="font-size:0.85rem; margin-top:0.25rem;">مدیر تحول دیجیتال و بانکداری هوشمند | رئیس هیئت‌مدیره نوین‌تک</p>
                 </div>
                 <div style="display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.88rem;">
                     <span>تلفن: <a href="#" data-phone-link onclick="return handlePhoneClick(event)" style="color:var(--gold-primary); text-decoration:none;" class="ltr-inline is-masked" data-phone-value>نمایش شماره</a></span>
@@ -3676,7 +3657,7 @@ var qrcode = function() {
                 y += 5.4 * u + 6.6 * u;
                 txt('حمید گل‌محمدی', textRight, y, 5.6, 900, '#FFFFFF');
                 y += 3.4 * u;
-                txt('مدیر ارشد تحول دیجیتال و بانکداری هوشمند', textRight, y, 2.5, 700, '#D4AF37');
+                txt('تحول دیجیتال و بانکداری هوشمند', textRight, y, 2.5, 700, '#D4AF37');
 
                 /* خط جداکننده */
                 y += 2.1 * u;
@@ -3774,7 +3755,7 @@ var qrcode = function() {
         /* ناوبری: فاصله دقیق از نوار بالا تا عنوان هر بخش در بالای صفحه قرار بگیرد */
         (function () {
             const navbar = document.querySelector('.navbar');
-            const sectionIds = ['profile', 'competencies', 'experience', 'achievements', 'education', 'publications'];
+            const sectionIds = ['profile', 'competencies', 'experience', 'education', 'publications'];
             const bottomLinks = document.querySelectorAll('#bottomNav a');
 
             function navHeight() { return navbar ? navbar.getBoundingClientRect().height : 0; }
@@ -3916,7 +3897,6 @@ var qrcode = function() {
                 }
             }
 
-            blocks.push({ el: document.querySelector('#achievements').cloneNode(true) });
             blocks.push({ el: document.querySelector('#education').cloneNode(true) });
 
             const pubHeader = document.querySelector('#publications .section-header').cloneNode(true);
@@ -3978,7 +3958,7 @@ var qrcode = function() {
                 const totalPagesFa = toPersianDigits(totalPages);
                 s.footerArea.innerHTML = `
                     <div class="print-footer-right">
-                        حمید گل‌محمدی | مدیر ارشد تحول دیجیتال، بانکداری هوشمند و راهبری فناوری اطلاعات
+                        حمید گل‌محمدی | مدیر تحول دیجیتال و بانکداری هوشمند | رئیس هیئت‌مدیره نوین‌تک
                     </div>
                     <div class="print-footer-left">
                         صفحه ${pageNumFa} از ${totalPagesFa}
